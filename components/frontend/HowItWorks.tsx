@@ -42,7 +42,7 @@ const HowItWorks = () => {
         <h2 className="text-3xl font-bold text-gray-900 mb-4">How It Works</h2>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
           Our platform connects healthcare professionals with facilities seamlessly.
-          Here's how our booking process works from start to finish.
+          Here is how our booking process works from start to finish.
         </p>
       </div>
 

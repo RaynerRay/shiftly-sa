@@ -2,9 +2,6 @@
 
 import React, { FC } from "react";
 import {
-  CheckCircle,
-  Users,
-  Building,
   ArrowRight,
   Wallet,
   CalendarDays,
@@ -14,10 +11,10 @@ import {
 
 import { useState } from "react";
 
-interface FAQItem {
-  qn: string;
-  ans: string;
-}
+// interface FAQItem {
+//   qn: string;
+//   ans: string;
+// }
 
 const faqs = {
   worker: [

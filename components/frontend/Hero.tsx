@@ -1,19 +1,16 @@
 import React from "react";
 import {
-  ChevronLeft,
-  ChevronRight,
-  Search,
+
   HeartPulse,
   Users,
-  StethoscopeIcon,
   Stethoscope,
 } from "lucide-react";
 import Image from "next/image";
-import SearchBar from "./SearchBar";
+// import SearchBar from "./SearchBar";
 // import TransitionalText from "./TransitionalText";
 
 const Hero = () => {
-  const TEXTS = ["Nurses", "Carers", "Social Workers"];
+  // const TEXTS = ["Nurses", "Carers", "Social Workers"];
 
   return (
     <div className="bg-gradient-to-br from-orange-50 to-white text-gray-200 md:h-screen">
@@ -102,7 +99,7 @@ const Hero = () => {
 
         {/* Search Bar */}
         <div className="mt-12">
-          <SearchBar />
+          {/* <SearchBar /> */}
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
-import Hero from '@/components/frontend/Hero'
+
+import Hero from '@/components/Frontend/Hero'
 import React from 'react'
 
 const page = () => {
