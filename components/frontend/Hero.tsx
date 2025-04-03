@@ -9,8 +9,8 @@ import {
   Stethoscope,
 } from "lucide-react";
 import Image from "next/image";
-// import TransitionalText from "./TransitionalText";
 import SearchBar from "./SearchBar";
+// import TransitionalText from "./TransitionalText";
 
 const Hero = () => {
   const TEXTS = ["Nurses", "Carers", "Social Workers"];
