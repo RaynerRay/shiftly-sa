@@ -1,4 +1,6 @@
 import * as React from "react";
+// added npm install --legacy-peer-deps
+
 
 import { MultiSelect } from "react-multi-select-component";
 type SelectInputProps = {
