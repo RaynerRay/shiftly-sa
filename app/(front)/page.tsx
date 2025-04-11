@@ -1,9 +1,9 @@
 import Head from "next/head";
 import { getDoctors } from "@/actions/users";
 import React from "react";
-import Hero from "@/components/frontend/Hero";
+// import Hero from "@/components/frontend/Hero";
 import LogoClouds from "@/components/frontend/LogoClouds";
-import Banner from "@/components/frontend/Banner";
+// import Banner from "@/components/frontend/Banner";
 
 export default async function Home() {
   // const bannerImages = [
@@ -14,18 +14,18 @@ export default async function Home() {
   // ];
 
   const doctors = (await getDoctors()) || [];
-  const careWorkers = doctors.filter(
-    (doctor) => doctor.doctorProfile?.profession === "careWorker"
-  );
-  const nurses = doctors.filter(
-    (doctor) => doctor.doctorProfile?.profession === "nurse"
-  );
-  const adultSocialWorkers = doctors.filter(
-    (doctor) => doctor.doctorProfile?.profession === "adultSocialWorker"
-  );
-  const childrenSocialWorkers = doctors.filter(
-    (doctor) => doctor.doctorProfile?.profession === "childrenSocialWorker"
-  );
+  // const careWorkers = doctors.filter(
+  //   (doctor) => doctor.doctorProfile?.profession === "careWorker"
+  // );
+  // const nurses = doctors.filter(
+  //   (doctor) => doctor.doctorProfile?.profession === "nurse"
+  // );
+  // const adultSocialWorkers = doctors.filter(
+  //   (doctor) => doctor.doctorProfile?.profession === "adultSocialWorker"
+  // );
+  // const childrenSocialWorkers = doctors.filter(
+  //   (doctor) => doctor.doctorProfile?.profession === "childrenSocialWorker"
+  // );
   return (
     <>
       <Head>
@@ -57,44 +57,44 @@ export default async function Home() {
         <meta name="twitter:image" content="/images/twitter-image.jpg" /> {/* Replace with your image path */}
       </Head>
       <section className="">
-        <Hero />
+        {/* <Hero /> */}
         <LogoClouds />
 
-        <Banner
+        {/* <Banner
           title="Care Workers"
           buttonLink="/search?profession=careWorker"
           backgroundImage="/yofte-assets/elements/cta-lines2.svg"
           // imageAlt="Product image"
           doctors={careWorkers}
           bgClassName="relative bg-sky-50 overflow-hidden"
-        />
+        /> */}
         {/* <div className="bg-white py-6">
           <BannerCarousel images={bannerImages} />
         </div> */}
-        <Banner
+        {/* <Banner
           title="Nurses"
           buttonLink="/search?profession=nurse"
           backgroundImage="/yofte-assets/elements/cta-lines2.svg"
           // imageAlt="Product image"
           doctors={nurses}
           bgClassName="relative bg-sky-50 overflow-hidden"
-        />
-        <Banner
+        /> */}
+        {/* <Banner
           title="Adult Social Workers"
           buttonLink="/search?profession=adultSocialWorker"
           backgroundImage="/yofte-assets/elements/cta-lines2.svg"
           // imageAlt="Product image"
           doctors={adultSocialWorkers}
           bgClassName="relative bg-sky-50 overflow-hidden"
-        />
-        <Banner
+        /> */}
+        {/* <Banner
           title="Children Social Workers"
           buttonLink="/search?profession=childrenSocialWorker"
           backgroundImage="/yofte-assets/elements/cta-lines2.svg"
           // imageAlt="Product image"
           bgClassName="bg-sky-50 mx-auto"
           doctors={childrenSocialWorkers}
-        />
+        /> */}
       </section>
     </>
   );

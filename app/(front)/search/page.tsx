@@ -5,7 +5,7 @@ import DoctorsListWithPagination from "@/components/DoctorsListWithPagination";
 import { separateAndCapitalise } from "@/lib/utils";
 import { Doctor } from "@/types/types";
 import Adverts from "@/components/frontend/Adverts";
-import  SearchBarSP  from '@/components/frontend/SearchBarSP';
+// import  SearchBarSP  from '@/components/frontend/SearchBarSP';
 
 export default async function SearchPage(props: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
   // Extract search parameters from props and await them
@@ -47,7 +47,7 @@ export default async function SearchPage(props: any) { // eslint-disable-line @t
       <div className="container max-w-7xl mx-auto px-4 py-8">
         {/* Search */}
         <div className="mb-8">
-          <SearchBarSP />
+          {/* <SearchBarSP /> */}
         </div>
           
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
@@ -108,7 +108,7 @@ export default async function SearchPage(props: any) { // eslint-disable-line @t
       <div className="container max-w-7xl mx-auto px-4 py-8">
         {/* Search */}
         <div className="mb-8">
-          <SearchBarSP />
+          {/* <SearchBarSP /> */}
         </div>
         
         <div className="bg-white rounded-lg shadow p-4">
