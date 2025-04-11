@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { getDoctors } from "@/actions/users";
+// import { getDoctors } from "@/actions/users";
 import React from "react";
 // import Hero from "@/components/frontend/Hero";
 import LogoClouds from "@/components/frontend/LogoClouds";
@@ -13,7 +13,7 @@ export default async function Home() {
   //   '/banner3.jpg'
   // ];
 
-  const doctors = (await getDoctors()) || [];
+  // const doctors = (await getDoctors()) || [];
   // const careWorkers = doctors.filter(
   //   (doctor) => doctor.doctorProfile?.profession === "careWorker"
   // );
