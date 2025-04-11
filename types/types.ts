@@ -1,4 +1,4 @@
-import { FileProps } from "@/components/FormInputs/MultipleFileUpload";
+// import { FileProps } from "@/components/FormInputs/MultipleFileUpload";
 import { AppointmentStatus, DoctorStatus, UserRole } from "@prisma/client";
 
 export type ServiceProps = { title: string; imageUrl: string; slug: string };

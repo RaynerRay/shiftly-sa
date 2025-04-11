@@ -3,9 +3,11 @@
 import fs from "fs/promises";
 import path from "path";
 import dotenv from "dotenv";
-import { EnvVariables } from "@/components/setup/EnvSetup";
+// import { EnvVariables } from "@/components/setup/EnvSetup";
 
-export async function createEnv(newVariables: EnvVariables) {
+export async function createEnv(
+  // newVariables: EnvVariables
+  ) {
   try {
     // const newVariables = await request.json();
     const envPath = path.join(process.cwd(), ".env");
@@ -19,12 +21,12 @@ export async function createEnv(newVariables: EnvVariables) {
         "No existing .env file found or unable to read it. Creating a new one."
       );
     }
-    const updatedVariables = { ...existingVariables, ...newVariables };
-    const envContent = Object.entries(updatedVariables)
-      .map(([key, value]) => `${key}="${value}"`)
-      .join("\n");
+    // const updatedVariables = { ...existingVariables, ...newVariables };
+    // const envContent = Object.entries(updatedVariables)
+    //   .map(([key, value]) => `${key}="${value}"`)
+    //   .join("\n");
 
-    await fs.writeFile(envPath, envContent, "utf-8");
+    // await fs.writeFile(envPath, envContent, "utf-8");
 
     console.log("Environment variables updated successfully");
     return { message: "Environment variables saved successfully", status: 200 };

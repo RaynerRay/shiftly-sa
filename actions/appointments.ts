@@ -1,7 +1,7 @@
 "use server";
 
-import { AppointmentUpdateProps } from "@/components/Dashboard/Doctor/UpdateAppointmentForm";
-import NewAppointmentEmail from "@/components/Emails/new-appointment";
+// import { AppointmentUpdateProps } from "@/components/Dashboard/Doctor/UpdateAppointmentForm";
+// import NewAppointmentEmail from "@/components/Emails/new-appointment";
 import { prismaClient } from "@/lib/db";
 import { AppointmentProps, ServiceProps } from "@/types/types";
 import { Appointment } from "@prisma/client";
@@ -25,12 +25,12 @@ export async function createAppointment(data: AppointmentProps) {
     const link = `${baseUrl}/dashboard/doctor/appointments/view/${newAppointment.id}`;
     const message =
       "You have a new appointment scheduled. Please review and approve it by clicking the button below.";
-    const sendMail = await resend.emails.send({
-      from: "Medical App <noreply@shiftly.uk>",
-      to: doctorMail ?? "",
-      subject: "New Appointment Approval Needed",
-      react: NewAppointmentEmail({ firstName, link, message }),
-    });
+    // const sendMail = await resend.emails.send({
+    //   from: "Medical App <noreply@shiftly.uk>",
+    //   to: doctorMail ?? "",
+    //   subject: "New Appointment Approval Needed",
+    //   react: NewAppointmentEmail({ firstName, link, message }),
+    // });
     revalidatePath("/dashboard/doctor/appointments");
     console.log(newAppointment);
 
@@ -74,51 +74,51 @@ export async function updateAppointment(id: string, data: AppointmentProps) {
     };
   }
 }
-export async function updateAppointmentById(
-  id: string,
-  data: AppointmentUpdateProps
-) {
-  try {
-    const updatedAppointment = await prismaClient.appointment.update({
-      where: {
-        id,
-      },
-      data,
-    });
-    const patientId = updatedAppointment.patientId;
-    const patient = await prismaClient.user.findUnique({
-      where: {
-        id: patientId,
-      },
-    });
-    const firstName = patient?.name;
-    const doctorMail = patient?.email;
-    const link = `${baseUrl}/dashboard/user/appointments/view/${updatedAppointment.id}`;
-    const message =
-      "Your appointment has been approved. You can View the Details here";
-    const sendMail = await resend.emails.send({
-      from: "Medical App <noreply@shiftly.uk>",
-      to: doctorMail ?? "",
-      subject: "Appointment Approved",
-      react: NewAppointmentEmail({ firstName, link, message }),
-    });
-    revalidatePath("/dashboard/doctor/appointments");
-    revalidatePath("/dashboard/user/appointments");
-    console.log(updatedAppointment);
-    return {
-      data: updatedAppointment,
-      status: 201,
-      error: null,
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      data: null,
-      status: 500,
-      error,
-    };
-  }
-}
+// export async function updateAppointmentById(
+//   id: string,
+//   // data: AppointmentUpdateProps
+// ) {
+//   try {
+//     const updatedAppointment = await prismaClient.appointment.update({
+//       where: {
+//         id,
+//       },
+//       data,
+//     });
+//     const patientId = updatedAppointment.patientId;
+//     const patient = await prismaClient.user.findUnique({
+//       where: {
+//         id: patientId,
+//       },
+//     });
+//     const firstName = patient?.name;
+//     const doctorMail = patient?.email;
+//     const link = `${baseUrl}/dashboard/user/appointments/view/${updatedAppointment.id}`;
+//     const message =
+//       "Your appointment has been approved. You can View the Details here";
+//     const sendMail = await resend.emails.send({
+//       from: "Medical App <noreply@shiftly.uk>",
+//       to: doctorMail ?? "",
+//       subject: "Appointment Approved",
+//       react: NewAppointmentEmail({ firstName, link, message }),
+//     });
+//     revalidatePath("/dashboard/doctor/appointments");
+//     revalidatePath("/dashboard/user/appointments");
+//     console.log(updatedAppointment);
+//     return {
+//       data: updatedAppointment,
+//       status: 201,
+//       error: null,
+//     };
+//   } catch (error) {
+//     console.log(error);
+//     return {
+//       data: null,
+//       status: 500,
+//       error,
+//     };
+//   }
+// }
 
 export async function getAppointments() {
   try {

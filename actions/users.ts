@@ -1,6 +1,6 @@
 "use server";
 
-import EmailTemplate from "@/components/Emails/email-template";
+// import EmailTemplate from "@/components/Emails/email-template";
 import { prismaClient } from "@/lib/db";
 import { DoctorDetail, RegisterInputProps } from "@/types/types";
 import generateSlug from "@/utils/generateSlug";
@@ -96,16 +96,16 @@ export async function createUser(formData: RegisterInputProps) {
     const message =
       "Thank you for registering with Shiftly UK. To complete your registration and verify your email address, please enter the following 6-digit verification code on our website :";
     
-      const sendMail = await resend.emails.send({
-      from: "Shiftly <info@shiftly.uk>",
-      to: email,
-      subject: "Verify Your Email Address",
-      react: EmailTemplate({ firstName, token, linkText, message }),
-    });
+    //   const sendMail = await resend.emails.send({
+    //   from: "Shiftly <info@shiftly.uk>",
+    //   to: email,
+    //   subject: "Verify Your Email Address",
+    //   react: EmailTemplate({ firstName, token, linkText, message }),
+    // });
    
     
     console.log(token);
-    console.log(sendMail);
+    // console.log(sendMail);
     // console.log(newUser);
     return {
       data: newUser,
