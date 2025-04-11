@@ -46,9 +46,9 @@ export default function ApproveBtn({
   console.log(selectedOption);
   async function updateStatus() {
     setLoading(true);
-    const data = {
-      status: selectedOption,
-    };
+    // const data = {
+    //   status: selectedOption,
+    // };
     // setLoading(false);
     // console.log(data);
     try {
