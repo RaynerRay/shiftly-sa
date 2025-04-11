@@ -36,6 +36,9 @@ export default function FormSelectInput({
 
   // Close dropdown when clicking outside
   useEffect(() => {
+    // Check if we're in a browser environment before using document
+    if (typeof document === 'undefined') return;
+    
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);

@@ -44,6 +44,9 @@ export default function SearchBar() {
   };
 
   useEffect(() => {
+    // Check if document is defined before accessing it
+    if (typeof document === 'undefined') return;
+    
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&

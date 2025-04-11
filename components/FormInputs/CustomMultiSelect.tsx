@@ -30,6 +30,9 @@ export default function CustomMultiSelect({
 
   // Close dropdown when clicking outside
   React.useEffect(() => {
+    // Only run on client-side
+    if (typeof document === 'undefined') return;
+    
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
