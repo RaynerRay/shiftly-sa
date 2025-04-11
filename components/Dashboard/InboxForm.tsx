@@ -9,7 +9,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { Service } from "@prisma/client";
-import FormSelectInput from "../FormInputs/FormSelectInput";
+// import FormSelectInput from "../FormInputs/FormSelectInput";
 import { InboxProps } from "@/types/types";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
@@ -78,7 +78,8 @@ export default function InboxForm({
       console.log(error);
     }
   }
-
+console.log(users)
+console.log(setSelectedUser)
   return (
     <div className="w-full max-w-2xl shadow-sm rounded-md m-3 border border-gray-200 mx-auto">
       <div className="text-center border-b border-gray-200 py-4 dark:border-slate-600">
@@ -95,12 +96,12 @@ export default function InboxForm({
       </div>
       <form className=" py-4 px-4  mx-auto " onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-4 grid-cols-2">
-          <FormSelectInput
+          {/* <FormSelectInput
             label="Recipients"
             options={users}
             option={selectedUser}
             setOption={setSelectedUser}
-          />
+          /> */}
           <TextInput
             label="Subject"
             register={register}

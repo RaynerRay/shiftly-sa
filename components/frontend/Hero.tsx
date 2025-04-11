@@ -6,7 +6,7 @@ import {
   Stethoscope,
 } from "lucide-react";
 import Image from "next/image";
-import SearchBar from "./SearchBar";
+// import SearchBar from "./SearchBar";
 import TransitionalText from "./TransitionalText";
 
 const Hero = () => {
@@ -99,7 +99,7 @@ const Hero = () => {
 
         {/* Search Bar */}
         <div className="mt-12">
-          <SearchBar />
+          {/* <SearchBar /> */}
         </div>
       </div>
     </div>
