@@ -16,7 +16,7 @@ import { authOptions } from "@/lib/auth";
 import AnalyticsCard from "../AnalyticsCard";
 import { getDoctors } from "@/actions/users";
 import { getInitials } from "@/utils/generateInitials";
-import ApproveBtn from "./ApproveBtn";
+// import ApproveBtn from "./ApproveBtn";
 import { getAppointments } from "@/actions/appointments";
 import { PatientProps } from "@/app/(back)/dashboard/doctors/layout";
 
@@ -91,10 +91,10 @@ export default async function Dashboard() {
                           View
                         </Link>
                       </Button>
-                      <ApproveBtn
+                      {/* <ApproveBtn
                         status={doctor.doctorProfile?.status ?? "PENDING"}
                         profileId={doctor.doctorProfile?.id ?? ""}
-                      />
+                      /> */}
                     </div>
                   </div>
                 );

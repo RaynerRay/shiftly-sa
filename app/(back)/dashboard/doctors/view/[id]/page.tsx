@@ -1,7 +1,7 @@
 import { getDoctorAppointments } from "@/actions/appointments";
 import { getDoctorById, getDoctorProfile } from "@/actions/users";
 import { FaRegFilePdf } from "react-icons/fa";
-import ApproveBtn from "@/components/Dashboard/ApproveBtn";
+// import ApproveBtn from "@/components/Dashboard/ApproveBtn";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { getNormalDate } from "@/utils/getNormalDate";
@@ -25,7 +25,7 @@ export default async function DoctorDetailsPage(props: any) { // eslint-disable-
   const appointments = (await getDoctorAppointments(id)).data || [];
   const doctor = await getDoctorById(id);
   const doctorProfile = await getDoctorProfile(id);
-  const status = doctorProfile?.status ?? "PENDING";
+  // const status = doctorProfile?.status ?? "PENDING";
   const dob = doctorProfile?.dob ?? "1992-05-13T21:00:00.000Z";
   const expiry =
     doctorProfile?.medicalLicenseExpiry ?? "1992-05-13T21:00:00.000Z";
@@ -54,7 +54,7 @@ export default async function DoctorDetailsPage(props: any) { // eslint-disable-
           </h2>
         </div>
         <div className="">
-          <ApproveBtn status={status} profileId={doctorProfile?.id ?? ""} />
+          {/* <ApproveBtn status={status} profileId={doctorProfile?.id ?? ""} /> */}
           <h2 className="border-b pb-3 mb-3">
             Appointments ({appointments.length.toString().padStart(2, "0")})
           </h2>
