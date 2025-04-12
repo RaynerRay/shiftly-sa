@@ -9,7 +9,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { Service } from "@prisma/client";
-// import FormSelectInput from "../FormInputs/FormSelectInput";
+import FormSelectInput from "../FormInputs/FormSelectInput";
 import { InboxProps } from "@/types/types";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
@@ -96,12 +96,12 @@ console.log(setSelectedUser)
       </div>
       <form className=" py-4 px-4  mx-auto " onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-4 grid-cols-2">
-          {/* <FormSelectInput
+          <FormSelectInput
             label="Recipients"
             options={users}
             option={selectedUser}
             setOption={setSelectedUser}
-          /> */}
+          />
           <TextInput
             label="Subject"
             register={register}

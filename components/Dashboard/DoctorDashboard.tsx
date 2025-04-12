@@ -9,13 +9,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import { PatientProps } from "@/app/(back)/dashboard/doctors/layout";
+import { PatientProps } from "@/app/(back)/dashboard/doctors/layout";
 import {
   getDoctorAppointments,
 } from "@/actions/appointments";
 import Link from "next/link";
-// import { getInitials } from "@/utils/generateInitials";
-// import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { getInitials } from "@/utils/generateInitials";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { cn } from "@/lib/utils";
 import { timeAgo } from "@/utils/timeAgo";
 import {
@@ -54,7 +54,7 @@ export default async function DoctorDashboard({
       });
     }
   });
-  // const patients = Array.from(uniquePatientsMap.values()) as PatientProps[];
+  const patients = Array.from(uniquePatientsMap.values()) as PatientProps[];
   return (
     <div className="px-8 py-4">
       <div className="flex items-center justify-between">
@@ -158,7 +158,7 @@ export default async function DoctorDashboard({
               </Button>
             </div>
           </CardHeader>
-          {/* <CardContent className="grid gap-8">
+          <CardContent className="grid gap-8">
             {patients &&
               patients.slice(0, 5).map((patient) => {
                 const initials = getInitials(patient.name);
@@ -188,7 +188,7 @@ export default async function DoctorDashboard({
                   </div>
                 );
               })}
-          </CardContent> */}
+          </CardContent>
         </Card>
       </div>
     </div>

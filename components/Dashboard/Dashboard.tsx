@@ -16,9 +16,9 @@ import { authOptions } from "@/lib/auth";
 import AnalyticsCard from "../AnalyticsCard";
 import { getDoctors } from "@/actions/users";
 import { getInitials } from "@/utils/generateInitials";
-// import ApproveBtn from "./ApproveBtn";
+import ApproveBtn from "./ApproveBtn";
 import { getAppointments } from "@/actions/appointments";
-// import { PatientProps } from "@/app/(back)/dashboard/doctors/layout";
+import { PatientProps } from "@/app/(back)/dashboard/doctors/layout";
 
 export default async function Dashboard() {
   const analytics = await getAdminAnalytics();
@@ -42,10 +42,10 @@ export default async function Dashboard() {
       });
     }
   });
-  // const patients = Array.from(uniquePatientsMap.values()) as PatientProps[];
+  const patients = Array.from(uniquePatientsMap.values()) as PatientProps[];
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-      {/* <p>The User Role is {user?.role}</p> */}
+      <p>The User Role is {user?.role}</p>
       <h1 className="scroll-m-20 text-2xl font-extrabold tracking-tight mb-3">
         Welcome, Admin {user?.name}
       </h1>
@@ -91,10 +91,10 @@ export default async function Dashboard() {
                           View
                         </Link>
                       </Button>
-                      {/* <ApproveBtn
+                      <ApproveBtn
                         status={doctor.doctorProfile?.status ?? "PENDING"}
                         profileId={doctor.doctorProfile?.id ?? ""}
-                      /> */}
+                      />
                     </div>
                   </div>
                 );
@@ -110,7 +110,7 @@ export default async function Dashboard() {
               </Button>
             </div>
           </CardHeader>
-          {/* <CardContent className="grid gap-8">
+          <CardContent className="grid gap-8">
             {patients &&
               patients.slice(0, 5).map((patient) => {
                 const initials = getInitials(patient.name);
@@ -140,7 +140,7 @@ export default async function Dashboard() {
                   </div>
                 );
               })}
-          </CardContent> */}
+          </CardContent>
         </Card>
       </div>
     </main>

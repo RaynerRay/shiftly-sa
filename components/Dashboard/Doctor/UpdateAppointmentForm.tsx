@@ -1,5 +1,5 @@
 "use client";
-// import { updateAppointmentById } from "@/actions/appointments";
+import { updateAppointmentById } from "@/actions/appointments";
 import RadioInput from "@/components/FormInputs/RadioInput";
 import SelectInput from "@/components/FormInputs/SelectInput";
 import TextInput from "@/components/FormInputs/TextInput";
@@ -60,10 +60,10 @@ export default function UpdateAppointmentForm({
   });
 
   async function handleUpdate(data: AppointmentUpdateProps) {
-    console.log(data)
+
     setLoading(true);
     try {
-      // await updateAppointmentById(appointment.id, data);
+      await updateAppointmentById(appointment.id, data);
       setLoading(false);
       toast.success("Appointment Updated successfully");
     } catch (error) {

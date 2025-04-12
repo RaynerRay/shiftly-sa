@@ -10,13 +10,13 @@ import {
 } from "@/components/ui/card";
 // import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { getPatientAppointments } from "@/actions/appointments";
-// import { DoctorProps } from "@/app/(back)/dashboard/doctors/layout";
+import { DoctorProps } from "@/app/(back)/dashboard/doctors/layout";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { timeAgo } from "@/utils/timeAgo";
 import { CalendarCheck, Check, CircleEllipsis, History, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-// import generateSlug from "@/utils/generateSlug";
+import generateSlug from "@/utils/generateSlug";
 export default async function PatientDashboard({
   session,
 }: {
@@ -37,7 +37,7 @@ export default async function PatientDashboard({
       });
     }
   });
-  // const doctors = Array.from(uniquePatientsMap.values()) as DoctorProps[];
+  const doctors = Array.from(uniquePatientsMap.values()) as DoctorProps[];
   return (
     <div className="px-8 py-4">
       <h1 className="scroll-m-20 text-2xl font-extrabold tracking-tight mb-3">
@@ -115,7 +115,7 @@ export default async function PatientDashboard({
               </Button>
             </div>
           </CardHeader>
-          {/* <CardContent className="grid gap-8">
+          <CardContent className="grid gap-8">
             {doctors &&
               doctors.slice(0, 5).map((item) => {
                 const slug = generateSlug(item.doctorName);
@@ -134,7 +134,7 @@ export default async function PatientDashboard({
                   </Link>
                 );
               })}
-          </CardContent> */}
+          </CardContent>
         </Card>
       </div>
     </div>

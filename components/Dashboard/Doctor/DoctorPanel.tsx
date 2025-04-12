@@ -19,7 +19,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getInitials } from "@/utils/generateInitials";
-// import ApproveBtn from "../ApproveBtn";
+import ApproveBtn from "../ApproveBtn";
 
 export default function DoctorPanel({
   doctors,
@@ -34,7 +34,7 @@ export default function DoctorPanel({
     <ScrollArea className="h-96 w-full ">
       {doctors &&
         doctors.map((doctor: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-          // const status = doctor?.doctorProfile?.status ?? "PENDING";
+          const status = doctor?.doctorProfile?.status ?? "PENDING";
           const initials = getInitials(doctor.name);
           const path = `/dashboard/doctors/view/${doctor.id}`;
           return (
@@ -61,10 +61,10 @@ export default function DoctorPanel({
                 <p className="text-sm text-muted-foreground">{doctor.email}</p>
               </div>
               <div className="ml-auto font-medium">
-                {/* <ApproveBtn
+                <ApproveBtn
                   status={status}
                   profileId={doctor.doctorProfile?.id ?? ""}
-                /> */}
+                />
               </div>
             </Link>
           );
