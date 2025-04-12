@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-// import Providers from "@/components/Providers";
+import Providers from "@/components/Providers";
 // import { ThemeProvider } from "@/components/theme-provider";
 import { siteConfig } from "@/config/site";
 const inter = Inter({ subsets: ["latin"] });
@@ -73,7 +73,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-        {/* <Providers> */}
+        <Providers>
           <OnboardingContextProvider>
             {/* <ThemeProvider
               attribute="class"
@@ -84,7 +84,7 @@ export default function RootLayout({
               {children}
             {/* </ThemeProvider> */}
           </OnboardingContextProvider>
-        {/* </Providers> */}
+        </Providers>
       </body>
     </html>
   );
