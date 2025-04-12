@@ -6,3 +6,4 @@
 ## ./components/Dashboard/Doctor/DoctorServiceSettings.tsx
 
 ## removed front end pages, not causing errors
+## added back layout, auth, ui inputs
