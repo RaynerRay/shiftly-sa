@@ -1,31 +1,31 @@
 "use client";
 import React from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-// import Link from "next/link";
-// import {
+import Link from "next/link";
+import {
 
-//   Mail,
-//   MapPin,
-//   User,
-// } from "lucide-react";
+  Mail,
+  MapPin,
+  User,
+} from "lucide-react";
 import { UserRole } from "@prisma/client";
 
-// import { usePathname } from "next/navigation";
-// import { cn } from "@/lib/utils";
-// import { PatientProps } from "@/app/(back)/dashboard/doctor/patients/layout";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { PatientProps } from "@/app/(back)/dashboard/doctor/patients/layout";
 
 export default function PatientPanel({
-  // patients,
+  patients,
   role,
 }: {
-  // patients: PatientProps[];
+  patients: PatientProps[];
   role: UserRole;
 }) {
   console.log(role);
-  // const pathname = usePathname();
+  const pathname = usePathname();
   return (
     <ScrollArea className="h-96 w-full ">
-      {/* {patients.map((item) => {
+      {patients.map((item) => {
         const path =
           role === "DOCTOR"
             ? `/dashboard/doctor/patients/view/${item.patientId}`
@@ -59,7 +59,7 @@ export default function PatientPanel({
             </div>
           </Link>
         );
-      })} */}
+      })}
     </ScrollArea>
   );
 }
