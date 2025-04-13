@@ -3,20 +3,21 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import React from "react";
-// import BioDataForm from "./BioDataForm";
-// import ContactInfo from "./ContactInfo";
+import BioDataForm from "./BioDataForm";
+import ContactInfo from "./ContactInfo";
 // import ProfessionInfo from "./RefereeInfo";
-// import ProfileInfoForm from "./ProfileInfoForm";
-// import PracticeInfo from "./PracticeInfo";
-// import AdditionalInfo from "./AdditionalInfo";
+import ProfileInfoForm from "./ProfileInfoForm";
+import PracticeInfo from "./PracticeInfo";
+import AdditionalInfo from "./AdditionalInfo";
 // import Availability from "./Availability";
 import { useOnboardingContext } from "@/context/context";
 import { DoctorProfile, Speciality } from "@prisma/client";
-// import RefereeInfo from "./RefereeInfo";
+import RefereeInfo from "./RefereeInfo";
 
 export default function OnboardingSteps({
-  // id,
-  // doctorProfile,
+  id,
+  // specialties,
+  doctorProfile,
 }: {
   id: string;
   specialties: Speciality[];
@@ -26,103 +27,101 @@ export default function OnboardingSteps({
   const params = useSearchParams();
   const pathname = usePathname();
   const page = params.get("page") ?? "bio-data";
-  const { truckingNumber, 
-    // doctorProfileId,
-     savedDBData } =
+  const { truckingNumber, doctorProfileId, savedDBData } =
     useOnboardingContext();
   // console.log(page);
   const steps = [
     {
       title: "Bio Data",
       page: "bio-data",
-      // component: (
-      //   <BioDataForm
-      //     userId={id}
-      //     title="Bio Data"
-      //     description="Please fill in your Bio Data Info"
-      //     page={page}
-      //     nextPage="profile"
-      //     formId={doctorProfile.id ? doctorProfileId : savedDBData.id}
-      //     doctorProfile={doctorProfile}
-      //   />
-      // ),
+      component: (
+        <BioDataForm
+          userId={id}
+          title="Bio Data"
+          description="Please fill in your Bio Data Info"
+          page={page}
+          nextPage="profile"
+          formId={doctorProfile.id ? doctorProfileId : savedDBData.id}
+          doctorProfile={doctorProfile}
+        />
+      ),
     },
     {
       title: "Profile Information",
       page: "profile",
-      // component: (
-      //   <ProfileInfoForm
-      //     title="Profile Information"
-      //     description="Please fill in your profile Info"
-      //     page={page}
-      //     nextPage="contact"
-      //     formId={doctorProfile.id ? doctorProfileId : savedDBData.id}
-      //     userId={id}
-      //     doctorProfile={doctorProfile}
-      //   />
-      // ),
+      component: (
+        <ProfileInfoForm
+          title="Profile Information"
+          description="Please fill in your profile Info"
+          page={page}
+          nextPage="contact"
+          formId={doctorProfile.id ? doctorProfileId : savedDBData.id}
+          userId={id}
+          doctorProfile={doctorProfile}
+        />
+      ),
     },
     {
       title: "Contact Information",
       page: "contact",
-      // component: (
-      //   <ContactInfo
-      //     page={page}
-      //     title="Contact Information"
-      //     description="Please fill in your contact Info"
-      //     nextPage="referee"
-      //     userId={id}
-      //     formId={doctorProfile.id ? doctorProfileId : savedDBData.id}
-      //     doctorProfile={doctorProfile}
-      //   />
-      // ),
+      component: (
+        <ContactInfo
+          page={page}
+          title="Contact Information"
+          description="Please fill in your contact Info"
+          nextPage="referee"
+          userId={id}
+          formId={doctorProfile.id ? doctorProfileId : savedDBData.id}
+          doctorProfile={doctorProfile}
+        />
+      ),
     },
 
     {
       title: "Referee Information",
       page: "referee",
-      // component: (
-      //   <RefereeInfo
-      //     // specialties={specialties}
-      //     page={page}
-      //     title="Referee Information"
-      //     description="Please fill in your referee Info"
-      //     nextPage="practice"
-      //     formId={doctorProfile.id ? doctorProfileId : savedDBData.id}
-      //     userId={id}
-      //     doctorProfile={doctorProfile}
-      //   />
-      // ),
+      component: (
+        <RefereeInfo
+          // specialties={specialties}
+          page={page}
+          title="Referee Information"
+          description="Please fill in your referee Info"
+          nextPage="practice"
+          formId={doctorProfile.id ? doctorProfileId : savedDBData.id}
+          userId={id}
+          doctorProfile={doctorProfile}
+        />
+      ),
     },
     {
       title: "Practice Information",
       page: "practice",
-      // component: (
-      //   <PracticeInfo
-      //     page={page}
-      //     title="Practice Information"
-      //     description="Please fill in your practice Info"
-      //     nextPage="additional"
-      //     formId={doctorProfile.id ? doctorProfileId : savedDBData.id}
-      //     userId={id}
-      //     doctorProfile={doctorProfile}
-      //   />
-      // ),
+      component: (
+        <PracticeInfo
+          page={page}
+          title="Practice Information"
+          description="Please fill in your practice Info"
+          nextPage="additional"
+          formId={doctorProfile.id ? doctorProfileId : savedDBData.id}
+          userId={id}
+          doctorProfile={doctorProfile}
+        />
+      ),
     },
     {
       title: "Additional Information",
       page: "additional",
-      // component: (
-      //   <AdditionalInfo
-      //     page={page}
-      //     title="Additional Information"
-      //     description="Please fill in your additional Info"
-      //     nextPage="final"
-      //     userId={id}
-      //     formId={doctorProfileId ? doctorProfileId : savedDBData.id}
-      //     doctorProfile={doctorProfile}
-      //   />
-      // ),
+      component: (
+        <AdditionalInfo
+          page={page}
+          title="Additional Information"
+          description="Please fill in your additional Info"
+          nextPage="final"
+          userId={id}
+          formId={doctorProfileId ? doctorProfileId : savedDBData.id}
+          doctorProfile={doctorProfile}
+        />
+      ),
     },
     // {
     //   title: "Availability",
@@ -138,7 +137,7 @@ export default function OnboardingSteps({
     //   ),
     // },
   ];
-  // const currentStep = steps.find((step) => step.page === page);
+  const currentStep = steps.find((step) => step.page === page);
   return (
     <div className="grid grid-cols-12 mx-auto rounded-lg shadow-inner   border border-slate-200 dark:border-slate-600 min-h-screen bg-slate-100 dark:bg-slate-950">
       <div className="col-span-full sm:col-span-3 divide-y-2 divide-gray-200 bg-slate-300 h-full dark:bg-slate-900">
@@ -176,7 +175,7 @@ export default function OnboardingSteps({
             </span>
           </p>
         )}
-        {/* {currentStep?.component} */}
+        {currentStep?.component}
       </div>
     </div>
   );
