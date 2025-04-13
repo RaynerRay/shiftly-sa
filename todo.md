@@ -12,4 +12,5 @@ fix doctors/slug - time selection
 ## added (back)/dashboardand doctorand done with back
 ## added (front)/ terms-and-conditions , cookies, about, contact, privacy, howitworks
 ## added (front)/ page.tsx
+## added (front)/ layout.tsx
 
