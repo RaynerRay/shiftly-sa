@@ -3,14 +3,8 @@ import { getBlogPostBySlug } from "@/actions/blogs";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: Promise<{ slug: string }> | { slug: string };
-}) {
-  // Await the params before accessing its properties
-  const resolvedParams = await params;
-  const slug = resolvedParams.slug;
+export default async function BlogPostPage(props: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
+  const slug = (props.params as { slug: string }).slug;
   
   const response = await getBlogPostBySlug(slug);
 
