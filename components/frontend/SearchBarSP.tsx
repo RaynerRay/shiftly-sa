@@ -121,12 +121,13 @@ export default function SearchBar() {
         </div>
 
         <button
-          className="bg-sky-500 text-white w-full md:w-2/12 rounded-lg flex items-center px-4 justify-center py-3 hover:bg-sky-600 transition-colors duration-200 shadow-md font-medium"
-          onClick={handleSearch}
-        >
-          <Search className="mr-2 h-5 w-5" />
-          Search
-        </button>
+  className="bg-sky-500 text-white w-full md:w-2/12 rounded-lg cursor-pointer flex items-center px-4 justify-center py-3 hover:bg-sky-600 transition-colors duration-200 shadow-md font-medium"
+  onClick={handleSearch}
+>
+  <Search className="mr-2 h-5 w-5" />
+  Search
+</button>
+
       </div>
     </div>
   );

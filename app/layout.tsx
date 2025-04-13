@@ -32,7 +32,7 @@ export const metadata: Metadata = {
       url: "https://shadcn.com",
     },
   ],
-  creator: "shadcn",
+  creator: "ray",
   openGraph: {
     type: "website",
     locale: "en_US",

@@ -64,7 +64,7 @@ const Footer = () => {
           <div className="grid grid-cols-2 gap-6">
             <Link href="/" className="text-blue-500 text-sm font-medium hover:text-blue-500 transition-colors">HOME</Link>
             <Link href="/about" className="text-gray-50 text-sm font-medium hover:text-blue-500 transition-colors">ABOUT</Link>
-            <Link href="//howitworks" className="text-gray-50 text-sm font-medium hover:text-blue-500 transition-colors">HOW IT WORKS</Link>
+            <Link href="/howitworks" className="text-gray-50 text-sm font-medium hover:text-blue-500 transition-colors">HOW IT WORKS</Link>
             <Link href="/join/professionals" className="text-gray-50 text-sm font-medium hover:text-blue-500 transition-colors">JOIN</Link>
             <Link href="/articles" className="text-gray-50 text-sm font-medium hover:text-blue-500 transition-colors">ARTICLES</Link>
             <Link href="/contact" className="text-gray-50 text-sm font-medium hover:text-blue-500 transition-colors">CONTACT</Link>
@@ -111,7 +111,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
           <p>
             © <a href="#" className="text-white hover:text-blue-500">Shiftly</a>, All Right Reserved. 
-             {" "}Designed by <Link href="https://www.linkedin.com/in/godfrey-rayner-96b81965/" target="_blank" className="text-blue-500 hover:text-blue-500"> {" "} {" "} Godfrey Rayner</Link>
+             {" "}Made by <Link href="https://www.linkedin.com/in/godfrey-rayner-96b81965/" target="_blank" className="text-blue-500 hover:text-blue-500"> {" "} {" "} Godfrey Rayner</Link>
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
           <Link href="/terms-and-conditions" className="text-gray-50 text-sm font-medium hover:text-blue-500 transition-colors">Terms & Conditions</Link>
