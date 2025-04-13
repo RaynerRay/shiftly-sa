@@ -8,4 +8,5 @@
 fix  SpecialtyForm
 
 ## removed front end pages, not causing errors
-## added back layout, auth, ui inputs
+## added back layout, auth, ui inputs, 
+## added (back)/dashboardand doctorand done with back
