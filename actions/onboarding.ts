@@ -1,6 +1,6 @@
 "use server";
 
-// import WelcomeEmail from "@/components/Emails/welcome-email";
+import WelcomeEmail from "@/components/Emails/welcome-email";
 import { prismaClient } from "@/lib/db";
 import { Resend } from "resend";
 
@@ -207,12 +207,12 @@ export async function completeProfile(id: string | undefined, data: any) {
       const previewText = "Welcome to Shiftly UK ";
       const message =
         "Thank you for joining Shiftly UK, we are so grateful that we have onboard ";
-      // const sendMail = await resend.emails.send({
-      //   from: "Medical App <noreply@shiftly.uk>",
-      //   to: email,
-      //   subject: "Welcome to Shiftly UK",
-      //   react: WelcomeEmail({ firstName, previewText, message }),
-      // });
+      const sendMail = await resend.emails.send({
+        from: "Medical App <noreply@shiftly.uk>",
+        to: email,
+        subject: "Welcome to Shiftly UK",
+        react: WelcomeEmail({ firstName, previewText, message }),
+      });
       const updatedProfile = await prismaClient.doctorProfile.update({
         where: {
           id,

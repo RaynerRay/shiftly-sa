@@ -3,7 +3,6 @@
 import { prismaClient } from "@/lib/db";
 import {
   AlarmClock,
-  DollarSign,
   LayoutGrid,
   LucideIcon,
   Mail,

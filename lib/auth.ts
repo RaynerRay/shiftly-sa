@@ -1,4 +1,6 @@
-import {  NextAuthOptions } from "next-auth";
+import {
+  //  AuthOptions, 
+  NextAuthOptions } from "next-auth";
 // import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prismaClient } from "@/lib/db";
@@ -25,27 +27,27 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         try {
-          console.log(
-            "Authorize function called with credentials:",
-            credentials
-          );
+          // console.log(
+          //   "Authorize function called with credentials:",
+          //   credentials
+          // );
           // Check if user credentials are Correct
           if (!credentials?.email || !credentials?.password) {
             throw { error: "No Inputs Found", status: 401 };
           }
-          console.log("Pass 1 checked ");
+          // console.log("Pass 1 checked ");
           //Check if user exists
           const existingUser = await prismaClient.user.findUnique({
             where: { email: credentials.email },
           });
 
           if (!existingUser) {
-            console.log("No user found");
+            // console.log("No user found");
             throw { error: "No user found", status: 404 };
           }
 
-          console.log("Pass 2 Checked");
-          console.log(existingUser);
+          // console.log("Pass 2 Checked");
+          // console.log(existingUser);
           let passwordMatch: boolean = false;
           //Check if Password is correct
           if (existingUser && existingUser.password) {
@@ -56,10 +58,10 @@ export const authOptions: NextAuthOptions = {
             );
           }
           if (!passwordMatch) {
-            console.log("Password incorrect");
+            // console.log("Password incorrect");
             throw { error: "Password Incorrect", status: 401 };
           }
-          console.log("Pass 3 Checked");
+          // console.log("Pass 3 Checked");
           const user = {
             id: existingUser.id,
             name: existingUser.name,
@@ -68,11 +70,11 @@ export const authOptions: NextAuthOptions = {
             picture: existingUser.image,
           };
           //
-          console.log("User Compiled");
-          console.log(user);
+          // console.log("User Compiled");
+          // console.log(user);
           return user;
         } catch (error) {
-          console.log("aLL Failed");
+          // console.log("aLL Failed");
           console.log(error);
           throw { error: "Something went wrong", status: 401 };
         }

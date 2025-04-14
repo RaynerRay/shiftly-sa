@@ -2,24 +2,23 @@ import LoginFormWithBg from "@/components/Auth/Login";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import React from "react";
 
-// Remove the explicit typing and let Next.js infer it
-export default async function Page(props: any) {  // eslint-disable-line @typescript-eslint/no-explicit-any
-  // Access searchParams from props
-  const { searchParams = {} } = props;
-  const returnUrl = searchParams.returnUrl || "/dashboard";
-  
+export default async function LoginPage({ searchParams }: { searchParams: Promise<{ returnUrl?: string }> }) {
+  // Await searchParams to resolve the Promise
+  const resolvedSearchParams = await searchParams;
+  const returnUrl = resolvedSearchParams.returnUrl || "/dashboard";
+
   const session = await getServerSession(authOptions);
-  
+
+  // Redirect if already logged in
   if (session) {
-    redirect(typeof returnUrl === 'string' ? returnUrl : "/dashboard");
+    redirect(returnUrl);
   }
-  
+
+  // Pass returnUrl to the client component
   return (
     <div className="">
-      <LoginFormWithBg />
+      <LoginFormWithBg returnUrl={returnUrl} />
     </div>
   );
 }
-

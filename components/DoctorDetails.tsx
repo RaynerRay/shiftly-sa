@@ -56,54 +56,94 @@ export default function DoctorDetails({
   };
 
 
-  // Function to convert time string to minutes for comparison
-  const convertTimeToMinutes = (time: string): number => {
-    const [timeStr, period] = time.toLowerCase().split(/(?=[ap]m)/);
-    let [hours] = timeStr.split(':').map(Number);
-    const [ minutes] = timeStr.split(':').map(Number);
+ // Function to convert time string to minutes for comparison
+const convertTimeToMinutes = (time: string): number => {
+  const [timeStr, period] = time.split(/(?=[ap]m)/i);
+  let [hours, minutes] = timeStr.split(':').map(Number);
+  
+  // If minutes is undefined (because there's no colon in the time), set it to 0
+  if (isNaN(minutes)) minutes = 0;
+  
+  // Convert to 24-hour format
+  if (period.toLowerCase() === 'pm' && hours !== 12) {
+    hours += 12;
+  } else if (period.toLowerCase() === 'am' && hours === 12) {
+    hours = 0;
+  }
+  
+  return hours * 60 + minutes;
+};
+
+// Function to check if times are consecutive
+const areTimesConsecutive = (times: string[], newTime: string): boolean => {
+  if (times.length === 0) return true;
+  
+  const sortedTimes = [...times].sort((a, b) => 
+    convertTimeToMinutes(a) - convertTimeToMinutes(b)
+  );
+  
+  const newTimeMinutes = convertTimeToMinutes(newTime);
+  const earliestTime = convertTimeToMinutes(sortedTimes[0]);
+  const latestTime = convertTimeToMinutes(sortedTimes[sortedTimes.length - 1]);
+  
+  // Check if the new time is one hour before the earliest or one hour after the latest
+  return (
+    Math.abs(newTimeMinutes - earliestTime) === 60 || 
+    Math.abs(newTimeMinutes - latestTime) === 60
+  );
+};
+
+// Updated time selection handler
+const handleTimeSelection = (time: string) => {
+  if (selectedTimes.includes(time)) {
+    // If removing a time, make sure remaining times stay consecutive
+    const remainingTimes = selectedTimes.filter(t => t !== time);
     
-    // Convert to 24-hour format
-    if (period === 'pm' && hours !== 12) {
-      hours += 12;
-    } else if (period === 'am' && hours === 12) {
-      hours = 0;
+    // If we're left with 0 or 1 times, that's always valid
+    if (remainingTimes.length <= 1) {
+      setSelectedTimes(remainingTimes);
+      return;
     }
     
-    return hours * 60 + (minutes || 0);
-  };
-
-  // Function to check if times are consecutive
-  const areTimesConsecutive = (existingTime: string, newTime: string): boolean => {
-    const existing = convertTimeToMinutes(existingTime);
-    const newTimeMinutes = convertTimeToMinutes(newTime);
-    return Math.abs(existing - newTimeMinutes) === 60;
-  };
-
-  // Updated time selection handler
-  const handleTimeSelection = (time: string) => {
-    if (selectedTimes.includes(time)) {
-      setSelectedTimes(selectedTimes.filter((t) => t !== time));
-    } else {
-      if (selectedTimes.length === 0) {
-        // First selection is always valid
-        setSelectedTimes([time]);
-      } else {
-        // Check if the new time is consecutive with any selected time
-        const isConsecutive = selectedTimes.some(selectedTime => 
-          areTimesConsecutive(selectedTime, time)
-        );
-
-        if (isConsecutive) {
-          const newTimes = [...selectedTimes, time].sort((a, b) => 
-            convertTimeToMinutes(a) - convertTimeToMinutes(b)
-          );
-          setSelectedTimes(newTimes);
-        } else {
-          toast.error("Please select consecutive time slots");
-        }
+    // Sort the remaining times
+    const sortedTimes = [...remainingTimes].sort((a, b) => 
+      convertTimeToMinutes(a) - convertTimeToMinutes(b)
+    );
+    
+    // Check if all remaining times are consecutive
+    let allConsecutive = true;
+    for (let i = 1; i < sortedTimes.length; i++) {
+      const prevTime = convertTimeToMinutes(sortedTimes[i-1]);
+      const currTime = convertTimeToMinutes(sortedTimes[i]);
+      if (Math.abs(currTime - prevTime) !== 60) {
+        allConsecutive = false;
+        break;
       }
     }
-  };
+    
+    if (allConsecutive) {
+      setSelectedTimes(remainingTimes);
+    } else {
+      toast.error("Removing this time would break consecutive selection");
+    }
+  } else {
+    // Adding a new time
+    if (selectedTimes.length === 0) {
+      // First selection is always valid
+      setSelectedTimes([time]);
+    } else {
+      // Check if the new time would be consecutive with existing selections
+      if (areTimesConsecutive(selectedTimes, time)) {
+        const newTimes = [...selectedTimes, time].sort((a, b) => 
+          convertTimeToMinutes(a) - convertTimeToMinutes(b)
+        );
+        setSelectedTimes(newTimes);
+      } else {
+        toast.error("Please select consecutive time slots");
+      }
+    }
+  }
+};
 
   // Calculate total cost whenever selected times change
   useEffect(() => {
