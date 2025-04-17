@@ -29,11 +29,15 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
               <MapPin className="w-5 h-5 text-gray-400" />
-              <span>61 Prices Avenue, Mt Pleasant, Sheffield, UK</span>
+              <span>Flat 55 Poole BH14 0HW, United Kingdom</span>
             </div>
             <div className="flex items-center space-x-3">
               <Phone className="w-5 h-5 text-gray-400" />
-              <span>+44 772 340 505</span>
+              <span>+44 794 763 7714</span>
+            </div>
+            <div className="flex items-center space-x-3">
+              <Phone className="w-5 h-5 text-gray-400" />
+              <span>+44 790 802 9287</span>
             </div>
             <div className="flex items-center space-x-3">
               <Mail className="w-5 h-5 text-gray-400" />

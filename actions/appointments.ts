@@ -25,14 +25,14 @@ export async function createAppointment(data: AppointmentProps) {
     const link = `${baseUrl}/dashboard/doctor/appointments/view/${newAppointment.id}`;
     const message =
       "You have a new appointment scheduled. Please review and approve it by clicking the button below.";
-    // const sendMail = await resend.emails.send({
-    //   from: "Medical App <noreply@shiftly.uk>",
-    //   to: doctorMail ?? "",
-    //   subject: "New Appointment Approval Needed",
-    //   react: NewAppointmentEmail({ firstName, link, message }),
-    // });
+    const sendMail = await resend.emails.send({
+      from: "Medical App <noreply@shiftly.uk>",
+      to: doctorMail ?? "",
+      subject: "New Appointment Approval Needed",
+      react: NewAppointmentEmail({ firstName, link, message }),
+    });
     revalidatePath("/dashboard/doctor/appointments");
-    console.log(newAppointment);
+    // console.log(newAppointment);
 
     //Send the Email to the Doctor
     //
@@ -59,7 +59,7 @@ export async function updateAppointment(id: string, data: AppointmentProps) {
       data,
     });
     revalidatePath("/dashboard/doctor/appointments");
-    console.log(updatedAppointment);
+    // console.log(updatedAppointment);
     return {
       data: updatedAppointment,
       status: 201,

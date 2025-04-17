@@ -58,7 +58,7 @@ export default function LoginFormWithBg({ returnUrl }: LoginFormProps) {
               <div className="text-neutral-700 dark:text-neutral-300 text-4xl mr-3 group-hover:text-sky-500 transition-colors duration-200">
                 <Cross />
               </div>
-              <span className="text-2xl font-extrabold tracking-wide text-neutral-800 dark:text-neutral-100 group-hover:text-sky-500 transition-colors duration-200">
+              <span className="text-2xl font-extrabold tracking-wide text-sky-500 dark:text-neutral-100 group-hover:text-sky-700 transition-colors duration-200">
                 SHIFTLY
               </span>
             </Link>

@@ -42,7 +42,10 @@ const page = () => {
                   </div>
                   <div className="single-contact flex items-center mb-4">
                     <Phone className="text-gray-50 mr-4  bg-sky-500 p-1" />
-                    <p><a href="tel:+1234567478">+44-774-340-505</a></p>
+                    <p><a href="tel:+447908029287">+44-794-763-7714</a></p>
+                    <p><a href="tel:+447908029287">+44-790-802-9287</a></p>
+                    <span>+44 794 763 7714</span>
+              <span>+44 790 802 9287</span>
                   </div>
                 </div>
                 {/* <div className="social-icon flex space-x-4 mt-6">

@@ -2,19 +2,13 @@
 import InfiniteLogoSlider from "./InfiniteLogoSlider";
 
 export default function LogoClouds() {
-  // const partners = [
-  //   { src: "/NHS.webp", link: "seef-zimbabwe" },
-  //   { src: "/NMC.webp", link: "pam-golding" },
-  //   { src: "/SCC.webp", link: "kennan-properties" },
-  //   { src: "/LB-Awards.webp", link: "royal-properties" },
-  //   { src: "/NHS.webp", link: "cardinal-properties" },
-  // ];
+
   const logos = [
     { id: 1, name: 'Company 1', imageUrl: '/NHS.webp' },
     { id: 2, name: 'Company 2', imageUrl: '/NMC.webp' },
     { id: 3, name: 'Company 3', imageUrl: '/SCC.webp' },
     { id: 4, name: 'Company 4', imageUrl: '/LB-Awards.webp' },
-    { id: 5, name: 'Company 5', imageUrl: '/NHS.webp' },
+    { id: 5, name: 'Company 5', imageUrl: '/SCC.webp' },
 
   ];
 
@@ -36,24 +30,7 @@ export default function LogoClouds() {
 
 
         <div className="flex flex-wrap justify-center -mx-4">
-          {/* {partners.map((partner, index) => (
-            <div
-              key={index}
-              className="w-1/2 md:w-1/3 lg:w-1/5 px-4 mb-8 lg:mb-0"
-            >
-              <div className="flex items-center justify-center h-32 md:h-36 px-4 md:px-8 rounded-md bg-gray-50 shadow-md">
-                <Link href={`/companies/${partner.link}`}>
-                  <Image
-                    className="mx-auto h-16 w-24"
-                    src={partner.src}
-                    alt=""
-                    width={100}
-                    height={40}
-                  />
-                </Link>
-              </div>
-            </div>
-          ))} */}
+     
            <InfiniteLogoSlider 
         logos={logos} 
         speed={20} // Optional: customize animation speed

@@ -24,7 +24,7 @@ export default async function Home() {
   return (
     <>
       <Head>
-        <title>Shiftly | Home - Marketplace for Healthcare Workers</title>
+        <title>Shiftly | Home - Instant Staffing for UK Healthcare Providers</title>
         <meta
           name="description"
           content="Shiftly connects healthcare professionals – including care workers, nurses, and social workers – with extra shift opportunities and clients seeking reliable staff."
@@ -34,7 +34,7 @@ export default async function Home() {
           content="Shiftly, healthcare workers, extra shifts, care workers, nurses, social workers, healthcare marketplace, medical staffing"
         />
         {/* Open Graph / Facebook */}
-        <meta property="og:title" content="Shiftly | Home - Marketplace for Healthcare Workers" />
+        <meta property="og:title" content="Shiftly | Home - Instant Staffing for UK Healthcare Providers" />
         <meta
           property="og:description"
           content="Discover extra shift opportunities and trusted healthcare staffing solutions on Shiftly."
@@ -44,7 +44,7 @@ export default async function Home() {
         <meta property="og:image" content="/images/og-image.jpg" /> {/* Replace with your image path */}
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Shiftly | Home - Marketplace for Healthcare Workers" />
+        <meta name="twitter:title" content="Shiftly | Home - Instant Staffing for UK Healthcare Providers" />
         <meta
           name="twitter:description"
           content="Shiftly connects healthcare professionals with extra shift opportunities and helps clients find trusted staff."

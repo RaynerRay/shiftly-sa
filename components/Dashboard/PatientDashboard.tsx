@@ -82,7 +82,8 @@ export default async function PatientDashboard({
                         <span>{item.appointmentFormattedDate}</span>
                       </div>
                       <span className="font-semibold">
-                        {item.appointmentTime}
+                        <span className="font-normal">from </span>
+                        {item.appointmentTime?.toString().split(',')[0]}
                       </span>
                       <div
                         className={cn(

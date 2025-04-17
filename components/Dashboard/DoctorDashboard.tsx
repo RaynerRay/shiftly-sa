@@ -125,7 +125,7 @@ export default async function DoctorDashboard({
                         <span>{item.appointmentFormattedDate}</span>
                       </div>
                       <span className="font-semibold">
-                        {item.appointmentTime}
+                        from {item.appointmentTime?.toString().split(',')[0]}
                       </span>
                       <div
                         className={cn(

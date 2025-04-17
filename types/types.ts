@@ -156,6 +156,7 @@ export interface AppointmentProps {
   companyName: string | null;
 
   appointmentTime: string; // Now stores multiple times as comma-separated string
+  
 
   charge: number;
   // Patient details
@@ -174,6 +175,7 @@ export interface AppointmentProps {
   status: AppointmentStatus;
   meetingLink: string;
   meetingProvider: string;
+  totalHours: number;
 }
 
 export interface BlogPost {

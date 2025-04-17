@@ -22,7 +22,7 @@ export default function ListPanel({
   appointments: Appointment[];
   role: UserRole;
 }) {
-  console.log(role);
+  // console.log(role);
   const pathname = usePathname();
   return (
     <ScrollArea className="h-96 w-full ">
@@ -52,7 +52,7 @@ export default function ListPanel({
               <CalendarCheck className="w-4 h-4 mr-2" />
               <span>{item.appointmentFormattedDate}</span>
             </div>
-            <span className="font-semibold">{item.appointmentTime}</span>
+            <span className="font-semibold">from {item.appointmentTime?.toString().split(',')[0]}</span>
           </div>
           <div
             className={cn(

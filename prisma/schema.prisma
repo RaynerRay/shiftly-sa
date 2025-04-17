@@ -114,6 +114,7 @@ model Appointment {
   patientId String
   charge Int
   appointmentTime String?
+  totalHours Int?
   // Patient details
   firstName String?
   lastName String?

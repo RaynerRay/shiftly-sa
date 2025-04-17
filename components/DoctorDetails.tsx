@@ -16,6 +16,7 @@ import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { Appointment, DoctorProfile } from "@prisma/client";
 import FrontDoctorDetails from "./FrontDoctorDetails";
+import { createAppointment } from "@/actions/appointments";
 
 export default function DoctorDetails({
   doctor,
@@ -161,7 +162,7 @@ const handleTimeSelection = (time: string) => {
       firstName: appointment?.firstName || patient?.name?.split(" ")[0],
       phone: appointment?.phone ?? "",
       lastName: appointment?.lastName || patient?.name?.split(" ")[1],
-      location: appointment?.location ?? "",
+      // location: appointment?.location ?? "",
       gender: appointment?.gender ?? "",
     },
   });
@@ -179,14 +180,17 @@ const handleTimeSelection = (time: string) => {
     data.charge = totalCost; // Use calculated total cost
     data.patientId = patient?.id ?? "";
     data.doctorName = doctor.name;
+    data.totalHours = selectedTimes.length;
 
     try {
       setLoading(true);
       // const doctorFirstName = doctor.name.split(" ")[0];
       // const patientFirstName = patient?.name?.split(" ")[0];
       // const roomName = `${doctorFirstName} - ${patientFirstName} Meeting Appointment`;
+      // console.log("Appointment data being sent:", data);
 
-      // const res = await createAppointment(data);
+      const res = await createAppointment(data);
+      console.log(res)
       setLoading(false);
       toast.success("Appointment Created Successfully");
       router.push("/dashboard/user/appointments");
@@ -213,6 +217,7 @@ const handleTimeSelection = (time: string) => {
       {step === 1 ? (
         <div className="">
           <div className="flex items-center justify-between">
+            
             <button
               onClick={() => setIsActive("details")}
               className={
