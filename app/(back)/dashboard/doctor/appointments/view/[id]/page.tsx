@@ -1,4 +1,5 @@
 import { getAppointmentById } from "@/actions/appointments";
+import UpdateAppointmentCompletionForm from "@/components/Dashboard/Doctor/UpdateAppointmentCompletion";
 import UpdateAppointmentForm from "@/components/Dashboard/Doctor/UpdateAppointmentForm";
 import { Calendar } from "lucide-react";
 import React from "react";
@@ -33,17 +34,17 @@ export default async function AppointmentDetailPage({
             {appointment?.appointmentFormattedDate}
           </h2>
           <div className="flex items-center text-sm">
-      <Calendar className="w-4 h-4 mr-2" />
-      <span className="flex flex-wrap">
-        {timeItems.map((item, index) => (
-          <span key={index} className="mr-1">
-            {item.trim()}
-            {index < timeItems.length - 1 && ","}
-            {(index + 1) % 4 === 0 && <br />} {/* Line break after every 4 items */}
-          </span>
-        ))}
-      </span>
-    </div>
+            <Calendar className="w-4 h-4 mr-2" />
+            <span className="flex flex-wrap">
+              {timeItems.map((item, index) => (
+                <span key={index} className="mr-1">
+                  {item.trim()}
+                  {index < timeItems.length - 1 && ","}
+                  {(index + 1) % 4 === 0 && <br />} {/* Line break after every 4 items */}
+                </span>
+              ))}
+            </span>
+          </div>
         </div>
       </div>
       <div className="py-4">
@@ -77,6 +78,18 @@ export default async function AppointmentDetailPage({
           {/* Update form */}
           {appointment && appointment.id && (
             <UpdateAppointmentForm appointment={appointment} />
+          )}
+        </div>
+        <div className="px-4 mt-4">
+          {/* Update completion form with totalHours and hourly rate */}
+          {appointment && appointment.id && (
+            <UpdateAppointmentCompletionForm 
+            appointment={appointment} 
+            totalHours={Number(appointment?.totalHours) || 0} 
+            hourlyRate={appointment?.totalHours && appointment?.charge 
+              ? Math.round(Number(appointment?.charge) / Number(appointment?.totalHours)) 
+              : 0}
+          />
           )}
         </div>
       </div>

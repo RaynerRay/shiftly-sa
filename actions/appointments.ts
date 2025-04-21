@@ -120,6 +120,53 @@ export async function updateAppointmentById(
   }
 }
 
+export async function updateAppointmentCompletion(
+  id: string, 
+  isCompleted: boolean,
+  actualStartTime: Date | null = null,
+  actualFinishTime: Date | null = null,
+  actualHours: number | null = null,
+  finalCharge: number | null = null,
+  totalHours: number = 0,
+  hourlyRate: number = 0
+) {
+  try {
+    let calculatedFinalCharge = finalCharge;
+    
+    // If no final charge is provided but we have actual hours, calculate it
+    if (!calculatedFinalCharge && actualHours !== null) {
+      // Use whichever is greater between actualHours and totalHours
+      const hoursToCharge = Math.max(actualHours, totalHours);
+      calculatedFinalCharge = Math.round(hoursToCharge * hourlyRate);
+    }
+    
+    const updatedAppointment = await prismaClient.appointment.update({
+      where: { id },
+      data: { 
+        isCompleted,
+        actualStartTime,
+        actualFinishTime,
+        actualHours,
+        finalCharge: calculatedFinalCharge
+      },
+    });
+    
+    revalidatePath("/dashboard/doctor/appointments");
+    return {
+      data: updatedAppointment,
+      status: 200,
+      error: null,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      data: null,
+      status: 500,
+      error,
+    };
+  }
+}
+
 export async function getAppointments() {
   try {
     const appointments = await prismaClient.appointment.findMany({

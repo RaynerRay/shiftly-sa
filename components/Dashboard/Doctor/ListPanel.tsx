@@ -6,7 +6,6 @@ import {
   CalendarCheck,
   Check,
   CircleEllipsis,
-  // Dot,
   History,
   X,
 } from "lucide-react";
@@ -22,10 +21,9 @@ export default function ListPanel({
   appointments: Appointment[];
   role: UserRole;
 }) {
-  // console.log(role);
   const pathname = usePathname();
   return (
-    <ScrollArea className="h-96 w-full ">
+    <ScrollArea className="h-96 w-full">
       {appointments.map((item) => (
         <Link
           key={item.id}
@@ -39,35 +37,44 @@ export default function ListPanel({
           )}
         >
           <div className="flex justify-between items-center pb-2">
-            <h2>
-              {item.doctorName} 
-            </h2>
-            <div className="flex items-center ">
+            <h2 className="text-sm font-semibold">{item.doctorName}</h2>
+            <div className="flex items-center text-xs">
               <History className="w-4 h-4 mr-2" />
               <span>{timeAgo(item.createdAt)}</span>
             </div>
           </div>
-          <div className="flex items-center gap-4 border-b">
-            <div className="flex items-center font-semibold">
+          <div className="flex items-center gap-4 border-b py-2">
+            <div className="flex items-center font-semibold text-xs">
               <CalendarCheck className="w-4 h-4 mr-2" />
               <span>{item.appointmentFormattedDate}</span>
             </div>
-            <span className="font-semibold">from {item.appointmentTime?.toString().split(',')[0]}</span>
+            <span className="font-semibold text-xs">
+              from {item.appointmentTime?.toString().split(",")[0]}
+            </span>
           </div>
-          <div
-            className={cn(
-              "flex items-center pt-2 text-blue-600",
-              item.status === "approved" && "text-green-600 font-semibold"
+          <div className="flex justify-between items-center pt-2">
+            <div
+              className={cn(
+                "flex items-center px-2 py-1 rounded-full text-xs font-semibold",
+                item.status === "pending" && "text-blue-600 bg-blue-100",
+                item.status === "approved" && "text-green-600 bg-green-100",
+                item.status === "rejected" && "text-red-600 bg-red-100"
+              )}
+            >
+              {item.status === "pending" ? (
+                <CircleEllipsis className="mr-2 w-4 h-4" />
+              ) : item.status === "approved" ? (
+                <Check className="mr-2 w-4 h-4" />
+              ) : (
+                <X className="mr-2 w-4 h-4" />
+              )}
+              <span>{item.status.charAt(0).toUpperCase() + item.status.slice(1)}</span>
+            </div>
+            {item.isCompleted && item.status === "approved" && (
+              <div className="text-xs font-semibold text-white bg-red-500 px-2 py-1 rounded-full">
+                Payment Needed
+              </div>
             )}
-          >
-            {item.status === "pending" ? (
-              <CircleEllipsis className="mr-2 w-4 h-4" />
-            ) : item.status === "approved" ? (
-              <Check className="mr-2 w-4 h-4" />
-            ) : (
-              <X className="mr-2 w-4 h-4" />
-            )}
-            <span>{item.status}</span>
           </div>
         </Link>
       ))}

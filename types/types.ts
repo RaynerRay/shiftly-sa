@@ -155,6 +155,8 @@ export interface AppointmentProps {
   doctorName: string;
   companyName: string | null;
 
+  isCompleted?: boolean;
+
   appointmentTime: string; // Now stores multiple times as comma-separated string
   
 
