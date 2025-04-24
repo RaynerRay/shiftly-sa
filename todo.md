@@ -18,4 +18,8 @@ update appointment
 ## T&C's i should specify once you booking , you can't chenge the agreed hours 24 hours before shift
 ## ask worker if they want to do their own taxes 
 
+## fix booking same day, appointment passed
 
+
+## Admin approval
+ ## pensions

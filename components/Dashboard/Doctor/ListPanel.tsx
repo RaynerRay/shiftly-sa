@@ -8,6 +8,9 @@ import {
   CircleEllipsis,
   History,
   X,
+  RefreshCcw,
+  AlertCircle,
+  Clock,
 } from "lucide-react";
 import { Appointment, UserRole } from "@prisma/client";
 import { timeAgo } from "@/utils/timeAgo";
@@ -22,6 +25,58 @@ export default function ListPanel({
   role: UserRole;
 }) {
   const pathname = usePathname();
+  
+  // Helper function to render payment status with appropriate icon and styling
+  const renderPaymentStatus = (appointment: Appointment) => {
+    // If appointment is approved but not completed yet, show waiting message
+    if (appointment.status === "approved" && !appointment.isCompleted) {
+      return (
+        <div className="flex items-center text-purple-600 bg-purple-100 px-2 py-1 rounded-full text-xs font-semibold">
+          <Clock className="mr-1 w-3 h-3" />
+          <span>Awaiting Completion</span>
+        </div>
+      );
+    }
+    
+    // For completed appointments, show payment status
+    if (appointment.status === "approved" && appointment.isCompleted) {
+      switch (appointment.paymentStatus) {
+        case "pending":
+          return (
+            <div className="flex items-center text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full text-xs font-semibold">
+              <CircleEllipsis className="mr-1 w-3 h-3" />
+              <span>Payment Pending</span>
+            </div>
+          );
+        case "completed":
+          return (
+            <div className="flex items-center text-green-600 bg-green-100 px-2 py-1 rounded-full text-xs font-semibold">
+              <Check className="mr-1 w-3 h-3" />
+              <span>Paid</span>
+            </div>
+          );
+        case "refunded":
+          return (
+            <div className="flex items-center text-blue-600 bg-blue-100 px-2 py-1 rounded-full text-xs font-semibold">
+              <RefreshCcw className="mr-1 w-3 h-3" />
+              <span>Refunded</span>
+            </div>
+          );
+        case "failed":
+          return (
+            <div className="flex items-center text-red-600 bg-red-100 px-2 py-1 rounded-full text-xs font-semibold">
+              <AlertCircle className="mr-1 w-3 h-3" />
+              <span>Payment Failed</span>
+            </div>
+          );
+        default:
+          return null;
+      }
+    }
+    
+    return null;
+  };
+  
   return (
     <ScrollArea className="h-96 w-full">
       {appointments.map((item) => (
@@ -32,7 +87,7 @@ export default function ListPanel({
           }/appointments/view/${item.id}`}
           className={cn(
             "border mb-2 border-gray-300 shadow-sm text-xs bg-white py-3 px-2 inline-block w-full rounded-md dark:text-slate-900",
-            pathname === `/dashboard/doctor/appointments/view/${item.id}` &&
+            pathname === `/dashboard/${role === "USER" ? "user" : "doctor"}/appointments/view/${item.id}` &&
               "border-green-700 border-2 bg-green-50"
           )}
         >
@@ -70,11 +125,9 @@ export default function ListPanel({
               )}
               <span>{item.status.charAt(0).toUpperCase() + item.status.slice(1)}</span>
             </div>
-            {item.isCompleted && item.status === "approved" && (
-              <div className="text-xs font-semibold text-white bg-red-500 px-2 py-1 rounded-full">
-                Payment Needed
-              </div>
-            )}
+            
+            {/* Payment status display */}
+            {renderPaymentStatus(item)}
           </div>
         </Link>
       ))}

@@ -225,7 +225,7 @@ export async function getAppointmentByPatientId(patientId: string | undefined) {
       }
       return appointment as Appointment;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return {
         data: null,
         status: 500,

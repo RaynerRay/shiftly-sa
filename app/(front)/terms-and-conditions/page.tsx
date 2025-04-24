@@ -1,11 +1,11 @@
-import { CheckCircle, ShieldCheck, Users } from "lucide-react";
+import { CheckCircle, ShieldCheck, Users, Clock } from "lucide-react";
 
 export default function page() {
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       <h1 className="text-3xl font-bold text-center">Terms and Conditions</h1>
       <p className="text-gray-700">
-        Welcome to Shiftly.uk. By using our platform, you agree to comply with our
+        Welcome to Shiftly UK. By using our platform, you agree to comply with our
         terms and conditions. Please read them carefully.
       </p>
 
@@ -37,6 +37,16 @@ export default function page() {
           Shiftly facilitates connections between professionals and providers.
           Payment terms and shift agreements are subject to mutual consent
           between parties.
+        </p>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-semibold flex items-center gap-2">
+          <Clock className="text-orange-500" /> Booking Policies
+        </h2>
+        <p className="text-gray-700">
+          Once a booking is confirmed, the agreed hours cannot be changed within 24 hours of the shift start time. 
+          Additionally, all appointments must be made at least 3 hours before the scheduled shift begins.
         </p>
       </section>
 

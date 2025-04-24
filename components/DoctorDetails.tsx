@@ -1,4 +1,3 @@
-
 "use client";
 import { AppointmentProps, DoctorDetail } from "@/types/types";
 import React, { useState, useEffect } from "react";
@@ -17,6 +16,8 @@ import toast from "react-hot-toast";
 import { Appointment, DoctorProfile } from "@prisma/client";
 import FrontDoctorDetails from "./FrontDoctorDetails";
 import { createAppointment } from "@/actions/appointments";
+import { platformPercentage } from "@/lib/constants";
+import { generateAppointmentReference } from "@/utils/generateReference";
 
 export default function DoctorDetails({
   doctor,
@@ -35,12 +36,13 @@ export default function DoctorDetails({
   const [loading, setLoading] = useState(false);
   const [date, setDate] = React.useState<Date | undefined>(new Date());
   const [totalCost, setTotalCost] = useState(0);
+  const [baseAmount, setBaseAmount] = useState(0);
   
   const day = getDayFromDate(date?.toDateString());
   const longDate = getLongDate(date!.toDateString());
   const times = doctor.doctorProfile?.availability?.[day] ?? null;
   const hourlyRate = doctor.doctorProfile?.hourlyWage ?? 0;
-
+  
   const genderOptions = [
     { label: "Male", value: "male" },
     { label: "Female", value: "female" },
@@ -147,9 +149,16 @@ const handleTimeSelection = (time: string) => {
 };
 
   // Calculate total cost whenever selected times change
+ 
   useEffect(() => {
     const numberOfHours = selectedTimes.length;
-    setTotalCost(numberOfHours * hourlyRate);
+    const baseAmount = numberOfHours * hourlyRate;
+    setTotalCost( baseAmount + (baseAmount * platformPercentage ) );
+  }, [selectedTimes, hourlyRate]);
+  console.log(baseAmount)
+  useEffect(() => {
+    const numberOfHours = selectedTimes.length;
+    setBaseAmount( numberOfHours * hourlyRate);
   }, [selectedTimes, hourlyRate]);
 
   const {
@@ -162,7 +171,7 @@ const handleTimeSelection = (time: string) => {
       firstName: appointment?.firstName || patient?.name?.split(" ")[0],
       phone: appointment?.phone ?? "",
       lastName: appointment?.lastName || patient?.name?.split(" ")[1],
-      // location: appointment?.location ?? "",
+      location:  "",
       gender: appointment?.gender ?? "",
     },
   });
@@ -173,6 +182,9 @@ const handleTimeSelection = (time: string) => {
       return;
     }
 
+    // Generate a unique reference for the appointment
+    const reference = generateAppointmentReference(doctor.name);
+
     data.appointmentDate = date;
     data.appointmentFormattedDate = longDate;
     data.appointmentTime = selectedTimes.join(", "); // Join all selected times
@@ -181,14 +193,11 @@ const handleTimeSelection = (time: string) => {
     data.patientId = patient?.id ?? "";
     data.doctorName = doctor.name;
     data.totalHours = selectedTimes.length;
+    data.reference = reference; // Add the generated reference
 
     try {
       setLoading(true);
-      // const doctorFirstName = doctor.name.split(" ")[0];
-      // const patientFirstName = patient?.name?.split(" ")[0];
-      // const roomName = `${doctorFirstName} - ${patientFirstName} Meeting Appointment`;
-      // console.log("Appointment data being sent:", data);
-
+    
       const res = await createAppointment(data);
       console.log(res)
       setLoading(false);
@@ -276,7 +285,8 @@ const handleTimeSelection = (time: string) => {
                     <div className="mt-4 p-4 bg-sky-50 rounded-lg">
                       <p className="text-sky-800 font-medium">Selected Times: {selectedTimes.join(", ")}</p>
                       <p className="text-sky-800 font-medium">Duration: {selectedTimes.length} hour(s)</p>
-                      <p className="text-sky-800 font-medium">Total Cost: £{totalCost}</p>
+                      {/* <p className="text-sky-800 font-medium">Base Amount {baseAmount}</p>
+                      <p className="text-sky-800 font-medium">Total Cost: £{totalCost}</p> */}
                     </div>
                   )}
                   <div className="py-4">
@@ -312,7 +322,7 @@ const handleTimeSelection = (time: string) => {
               <div className="space-y-6">
                 <div className="grid grid-cols-2 gap-6 ">
                   <TextInput
-                    label="First Name"
+                    label="Patient First Name"
                     register={register}
                     name="firstName"
                     errors={errors}
@@ -320,7 +330,7 @@ const handleTimeSelection = (time: string) => {
                     placeholder="Enter First Name"
                   />
                   <TextInput
-                    label="Last Name"
+                    label="Patient Last Name"
                     register={register}
                     name="lastName"
                     className="col-span-1"
@@ -379,12 +389,12 @@ const handleTimeSelection = (time: string) => {
               <div className="space-y-6">
                 <div className="">
                   <TextInput
-                    label="Work Location"
+                    label="Work Site"
                     register={register}
                     name="location"
                     errors={errors}
                     className="col-span-1 my-2"
-                    placeholder="Enter work Location"
+                    placeholder="Enter work address"
                   />
                    <RadioInput
                     title="Patient Gender"

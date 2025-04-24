@@ -1,5 +1,5 @@
 // import { FileProps } from "@/components/FormInputs/MultipleFileUpload";
-import { AppointmentStatus, DoctorStatus, UserRole } from "@prisma/client";
+import { AppointmentStatus, DoctorStatus, PaymentStatus } from "@prisma/client";
 
 export type ServiceProps = { title: string; imageUrl: string; slug: string };
 
@@ -121,6 +121,8 @@ interface DoctorProfileDetail extends DoctorProfile {
   research: string | null;
   accomplishments: string | null;
   status: DoctorStatus;
+  deductTaxBeforePayment: Boolean;   
+  band:            String
 }
 export type InboxProps = {
   recieverId: string;
@@ -158,6 +160,9 @@ export interface AppointmentProps {
   isCompleted?: boolean;
 
   appointmentTime: string; // Now stores multiple times as comma-separated string
+  reference?: string;
+  paymentStatus?: PaymentStatus;
+  paymentMethod?: string;
   
 
   charge: number;

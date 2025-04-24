@@ -1,20 +1,22 @@
 "use client";
-import {  PracticeFormProps } from "@/types/types";
+import { PracticeFormProps } from "@/types/types";
 import { useForm } from "react-hook-form";
-import TextInput from "../FormInputs/TextInput";
+// import TextInput from "../FormInputs/TextInput";
 import SubmitButton from "../FormInputs/SubmitButton";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { usePathname, useRouter } from "next/navigation";
-
-// import RadioInput from "../FormInputs/RadioInput";
 import ArrayItemsInput from "../FormInputs/ArrayInput";
-// import ShadSelectInput from "../FormInputs/ShadSelectInput";
 import { StepFormProps } from "./BioDataForm";
 import { updateDoctorProfile } from "@/actions/onboarding";
 import { useOnboardingContext } from "@/context/context";
-// import SelectInput from "../FormInputs/SelectInput";
-// import { specialisations } from './../../lib/specialisations';
+import { hourlyRates } from "@/lib/constants";
+
+// Define the hourly rate options type
+// interface HourlyRateOption {
+//   profession: string;
+//   rate: number;
+// }
 
 export default function PracticeInfo({
   page,
@@ -26,21 +28,14 @@ export default function PracticeInfo({
   nextPage,
   doctorProfile,
 }: StepFormProps) {
-
   const [isLoading, setIsLoading] = useState(false);
-  const {  savedDBData, setPracticeData } = useOnboardingContext();
+  const { savedDBData, setPracticeData } = useOnboardingContext();
   const pathname = usePathname();
-  console.log(` new specialty ${specialties}`)
+  console.log(` new specialty ${specialties}`);
 
-  // const allSpecialties =
-  //   specialties?.map((item) => {
-  //     return {
-  //       label: item.title,
-  //       value: item.id,
-  //     };
-  //   }) || [];
 
-    const initialSpecialities =
+
+  const initialSpecialities =
     doctorProfile.otherSpecialties.length > 0
       ? doctorProfile.otherSpecialties
       : savedDBData.otherSpecialties;
@@ -50,25 +45,35 @@ export default function PracticeInfo({
     doctorProfile.servicesOffered.length > 0
       ? doctorProfile.servicesOffered
       : savedDBData.servicesOffered;
-  // const initialInsuranceStatus =
-  //   doctorProfile.insuranceAccepted || savedDBData.insuranceAccepted;
-  const [services, setServices] = useState(initialServices);// eslint-disable-line
-  // console.log(services, initialServices);
-  // const [insuranceAccepted, setInsuranceAccepted] = useState(
-  //   initialInsuranceStatus
-  // );
-  // console.log(date);
+  const [services] = useState(initialServices);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    // setValue,
+    watch,
   } = useForm<PracticeFormProps>({
     defaultValues: {
       page: doctorProfile.page || savedDBData.page,
-      hourlyWage: doctorProfile.hourlyWage || savedDBData.hourlyWage,
+      hourlyWage: doctorProfile.hourlyWage?.toString() || savedDBData.hourlyWage?.toString() || "",
     },
   });
+  
+  const selectedHourlyWage = watch("hourlyWage");
+  
+  // Function to get the display text for the current selection (for info display)
+  // const getSelectedRateInfo = () => {
+  //   if (!selectedHourlyWage) return "";
+    
+  //   const selectedOption = hourlyRates.find(option => option.rate.toString() === selectedHourlyWage);
+  //   if (!selectedOption) return "";
+    
+  //   return `${selectedOption.profession}`;
+  // };
+  
   const router = useRouter();
+  
   async function onSubmit(data: PracticeFormProps) {
     data.page = page;
     data.otherSpecialties = otherSpecialties;
@@ -82,7 +87,6 @@ export default function PracticeInfo({
       setPracticeData(data);
       if (res?.status === 201) {
         setIsLoading(false);
-        //extract the profile form data from the updated profile
         toast.success("Practice Info Updated Successfully");
         router.push(`${pathname}?page=${nextPage}`);
         console.log(res.data);
@@ -92,18 +96,10 @@ export default function PracticeInfo({
       }
     } catch (error) { 
       setIsLoading(false);
-      console.log(error)
+      console.log(error);
     }
   }
-  // hospitalName: string;
-  // hospitalAddress: string;
-  // hospitalContactNumber: string;
-  // hospitalEmailAddress: string;
-  // hospitalWebsite?: string;
-  // hospitalHoursOfOperation: number;
-  // servicesOffered: string[];
-  // insuranceAccepted: string;
-  // languagesSpoken: string[];
+
   return (
     <div className="w-full">
       <div className="text-center border-b border-gray-200 pb-4 dark:border-slate-600">
@@ -112,44 +108,42 @@ export default function PracticeInfo({
         </h1>
         <p className="text-balance text-muted-foreground">{description}</p>
       </div>
-      <form className=" py-4 px-4  mx-auto " onSubmit={handleSubmit(onSubmit)}>
+      <form className="py-4 px-4 mx-auto" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-4 grid-cols-2">
-          {/* <TextInput
-            label="Hospital Name"
-            register={register}
-            name="hospitalName"
-            errors={errors}
-            placeholder="Enter hospital Name "
-            className="col-span-full sm:col-span-1"
-          /> */}
-          <TextInput
-            label="Your Minimum Hourly Charge"
-            register={register}
-            name="hourlyWage"
-            type="number"
-            errors={errors}
-            placeholder="Enter Charge per Hour "
-            className="col-span-full sm:col-span-1"
-          />
+          <div className="col-span-full sm:col-span-1">
+            <label htmlFor="hourlyWage" className="block text-sm font-medium mb-1">
+              Your Professional Role
+            </label>
+            <select
+              id="hourlyWage"
+              {...register("hourlyWage", { required: "Please select your professional role" })}
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Select your role and experience level</option>
+              {hourlyRates.map((option, index) => (
+                <option key={index} value={option.rate.toString()}>
+                  {option.profession}
+                </option>
+              ))}
+            </select>
+            {errors.hourlyWage && (
+              <p className="text-red-500 text-sm mt-1">{errors.hourlyWage.message}</p>
+            )}
+            
+            {selectedHourlyWage && (
+              <p className="text-sm text-gray-500 mt-1">
+                Hourly rate: £{selectedHourlyWage}/hr
+              </p>
+            )}
+          </div>
         
           <ArrayItemsInput
             setItems={setOtherSpecialties}
             items={otherSpecialties}
             itemTitle="Other Specialties"
           />
-
-          
-          {/* <ArrayItemsInput
-            setItems={setServices}
-            items={services}
-            itemTitle="Add Additional Services"
-          /> */}
-          {/* <ArrayItemsInput
-            setItems={setLanguages}
-            items={languages}
-            itemTitle="Add Languages Spoken at the Hospital"
-          /> */}
         </div>
+        
         <div className="mt-8 flex justify-center items-center">
           <SubmitButton
             title="Save and Continue"

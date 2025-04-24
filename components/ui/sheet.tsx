@@ -7,6 +7,27 @@ import { X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+// Visual hidden component for accessibility
+const VisuallyHidden = ({
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLSpanElement>) => {
+  return (
+    <span
+      className="absolute h-px w-px p-0 overflow-hidden whitespace-nowrap border-0"
+      style={{
+        clip: "rect(0 0 0 0)",
+        clipPath: "inset(50%)",
+        margin: "-1px",
+      }}
+      {...props}
+    >
+      {children}
+    </span>
+  )
+}
+VisuallyHidden.displayName = "VisuallyHidden"
+
 const Sheet = SheetPrimitive.Root
 
 const SheetTrigger = SheetPrimitive.Trigger
@@ -51,12 +72,15 @@ const sheetVariants = cva(
 
 interface SheetContentProps
   extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
-    VariantProps<typeof sheetVariants> {}
+    VariantProps<typeof sheetVariants> {
+  // Add optional title prop for accessibility
+  accessibilityTitle?: string;
+}
 
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
->(({ side = "right", className, children, ...props }, ref) => (
+>(({ side = "right", className, children, accessibilityTitle = "Sheet", ...props }, ref) => (
   <SheetPortal>
     <SheetOverlay />
     <SheetPrimitive.Content
@@ -64,6 +88,11 @@ const SheetContent = React.forwardRef<
       className={cn(sheetVariants({ side }), className)}
       {...props}
     >
+      {/* Always include a title for screen readers */}
+      <SheetPrimitive.Title className="sr-only">
+        {accessibilityTitle}
+      </SheetPrimitive.Title>
+      
       {children}
       <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
         <X className="h-4 w-4" />
@@ -137,4 +166,5 @@ export {
   SheetFooter,
   SheetTitle,
   SheetDescription,
+  VisuallyHidden,
 }

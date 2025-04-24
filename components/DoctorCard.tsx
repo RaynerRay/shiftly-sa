@@ -41,7 +41,7 @@ const DoctorCard: React.FC<DoctorCardProps> = ({  doctor }) => {
                 <BadgeCheck className="w-3 h-3 mr-1" />
                 Available today
               </span>
-              <span className="px-2 py-1 text-xs font-semibold bg-orange-500/90 text-white rounded-full">
+              <span className="px-2 py-1 text-xs font-semibold bg-purple-500/90 text-white rounded-full">
                 {doctor.doctorProfile?.gender}
               </span>
             </div>
@@ -78,10 +78,10 @@ const DoctorCard: React.FC<DoctorCardProps> = ({  doctor }) => {
               <Calendar className="w-4 h-4 mr-1" />
               {formattedDate}
             </div>
-            <div className="flex items-center font-medium text-blue-600 :text-blue-400">
+            {/* <div className="flex items-center font-medium text-blue-600 :text-blue-400">
               from <span className="mx-1">£</span>
               {doctor.doctorProfile?.hourlyWage}
-            </div>
+            </div> */}
           </div>
 
           {/* Available Times */}

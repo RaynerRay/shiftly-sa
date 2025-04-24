@@ -1,4 +1,5 @@
 "use client";
+
 import { updateAppointmentById } from "@/actions/appointments";
 import RadioInput from "@/components/FormInputs/RadioInput";
 import { Button } from "@/components/ui/button";
@@ -20,10 +21,18 @@ export default function UpdateAppointmentForm({
 }) {
   const [loading, setLoading] = useState(false);
   
-  // Check if appointment date has passed - using appointmentDate instead of date
-  const appointmentDate = new Date(appointment.appointmentDate || "");
-  const currentDate = new Date();
-  const isAppointmentPassed = appointmentDate < currentDate;
+  // Get the first time from appointmentTime (assuming format like "10:00 AM, 11:00 AM, etc.")
+  const firstAppointmentTime = appointment.appointmentTime?.split(',')[0]?.trim() || "";
+  
+  // Combine date and time to create appointment datetime
+  const appointmentDateTime = new Date(`${appointment.appointmentDate} ${firstAppointmentTime}`);
+  const currentDateTime = new Date();
+  
+  // Calculate the difference in hours
+  const hoursDifference = (appointmentDateTime.getTime() - currentDateTime.getTime()) / (1000 * 60 * 60);
+  
+  // Check if appointment is less than 3 hours away or in the past
+  const cannotUpdateAppointment = hoursDifference < 3;
   
   const statusOptions = [
     {
@@ -53,9 +62,9 @@ export default function UpdateAppointmentForm({
   });
 
   async function handleUpdate(data: AppointmentUpdateProps) {
-    // Prevent updates if appointment date has passed
-    if (isAppointmentPassed) {
-      toast.error("Cannot update appointments after their scheduled date");
+    // Prevent updates if appointment is less than 3 hours away
+    if (cannotUpdateAppointment) {
+      toast.error("Cannot update appointments within 3 hours of the scheduled time");
       return;
     }
 
@@ -82,23 +91,25 @@ export default function UpdateAppointmentForm({
             Update Appointment
           </h2>
           <Button 
-            className="w-full sm:w-auto mb-3 sm:mb-0" 
-            disabled={loading || isAppointmentPassed}
+            className="w-full sm:w-auto mb-3 sm:mb-0"
+            disabled={loading || cannotUpdateAppointment}
           >
-            {loading 
-              ? "Saving..." 
-              : isAppointmentPassed 
-                ? "Cannot Update" 
+            {loading
+              ? "Saving..."
+              : cannotUpdateAppointment
+                ? "Cannot Update"
                 : "Update Appointment"}
           </Button>
         </div>
         
-        {isAppointmentPassed && (
+        {cannotUpdateAppointment && (
           <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 sm:p-4 my-3 sm:my-4">
             <div className="flex">
               <div className="ml-2 sm:ml-3">
                 <p className="text-xs sm:text-sm text-yellow-700">
-                  This appointment has already passed and cannot be updated.
+                  {hoursDifference < 0 
+                    ? "This appointment has already passed and cannot be updated."
+                    : "Appointments cannot be updated within 3 hours of the scheduled time."}
                 </p>
               </div>
             </div>
@@ -115,7 +126,7 @@ export default function UpdateAppointmentForm({
                 register={register}
                 radioOptions={statusOptions}
                 className="col-span-1"
-                disabled={isAppointmentPassed}
+                disabled={cannotUpdateAppointment}
               />
             </div>
           </div>

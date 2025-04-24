@@ -62,17 +62,17 @@ export default async function AppointmentDetailPage({
           <p className="px-3 mt-1 sm:mt-0 w-full sm:w-3/4 md:w-4/5 lg:w-5/6">{appointment?.phone}</p>
         </div>
         <div className="flex flex-col sm:flex-row sm:divide-x-2 px-4 py-3 divide-gray-200 border-b">
-          <p className="px-3 text-sm font-semibold w-full sm:w-1/4 md:w-1/5 lg:w-1/6">Address</p>
+          <p className="px-3 text-sm font-semibold w-full sm:w-1/4 md:w-1/5 lg:w-1/6">Site</p>
           <p className="px-3 mt-1 sm:mt-0 break-words w-full sm:w-3/4 md:w-4/5 lg:w-5/6">{appointment?.location}</p>
         </div>
         <div className="flex flex-col sm:flex-row sm:divide-x-2 px-4 py-3 divide-gray-200 border-b">
           <p className="px-3 text-sm font-semibold w-full sm:w-1/4 md:w-1/5 lg:w-1/6">Total Hours</p>
           <p className="px-3 mt-1 sm:mt-0 w-full sm:w-3/4 md:w-4/5 lg:w-5/6">{appointment?.totalHours}</p>
         </div>
-        <div className="flex flex-col sm:flex-row sm:divide-x-2 px-4 py-3 divide-gray-200 border-b">
+        {/* <div className="flex flex-col sm:flex-row sm:divide-x-2 px-4 py-3 divide-gray-200 border-b">
           <p className="px-3 text-sm font-semibold w-full sm:w-1/4 md:w-1/5 lg:w-1/6">To Be Paid</p>
           <p className="px-3 mt-1 sm:mt-0 w-full sm:w-3/4 md:w-4/5 lg:w-5/6">£ {appointment?.charge}</p>
-        </div>
+        </div> */}
 
         <div className="px-4 mt-4">
           {/* Update form */}
