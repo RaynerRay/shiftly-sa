@@ -63,6 +63,7 @@ export type PracticeFormProps = {
   servicesOffered: string[];
   // insuranceAccepted: string;
   hourlyWage: number;
+  deductTaxBeforePayment?: boolean
   // languagesSpoken: string[];
   page: string;
 };

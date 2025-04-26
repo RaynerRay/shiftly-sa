@@ -200,7 +200,9 @@ export type DataProps = {
 
 export async function getDoctorsBySearch(city?: string, profession?: string) {
   try {
-    const whereClause: any = {};
+    const whereClause: any = {
+      status: "APPROVED" // Only get verified doctors
+    };
 
     if (city) {
       whereClause.city = city;
@@ -211,14 +213,9 @@ export async function getDoctorsBySearch(city?: string, profession?: string) {
     }
 
     const doctorProfiles = await prismaClient.doctorProfile.findMany({
-      where: {
-        AND: [
-          city ? { city } : {}, 
-          profession ? { profession } : {} 
-        ]
-      },
+      where: whereClause,
       include: {
-        user: true, // Include user to get additional details
+        user: true,
         availability: true,
       },
     });

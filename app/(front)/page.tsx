@@ -2,8 +2,10 @@ import Head from "next/head";
 import { getDoctors } from "@/actions/users";
 import React from "react";
 import Hero from "@/components/frontend/Hero";
-import LogoClouds from "@/components/frontend/LogoClouds";
+// import LogoClouds from "@/components/frontend/LogoClouds";
 import Banner from "@/components/frontend/Banner";
+import CareServices from "@/components/Home/CareServices";
+import Media from "@/components/Home/Media";
 
 export default async function Home() {
 
@@ -53,8 +55,10 @@ export default async function Home() {
       </Head>
       <section className="">
         <Hero />
-        <LogoClouds />
 
+        {/* <LogoClouds /> */}
+        <CareServices />
+        <Media />
         <Banner
           title="Care Workers"
           buttonLink="/search?profession=careWorker"

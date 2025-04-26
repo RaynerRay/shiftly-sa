@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Mail, Phone, Menu, X, Cross, PersonStandingIcon } from 'lucide-react';
+import { Mail, Phone, Menu, X, Cross, LogIn } from 'lucide-react';
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -31,7 +31,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
   return (
     <div className="w-full">
       {/* Top bar */}
-      <div className="max-w-7xl mx-auto bg-gradient-to-r from-sky-600 to-sky-700">
+      <div className="max-w-7xl mx-auto bg-gradient-to-r from-sky-500 to-sky-600">
         <div className="hidden md:flex w-full py-2 px-4 justify-between items-center border-b">
           <div className="flex items-center">
             <Mail className="w-4 h-4 mr-2 text-white" />
@@ -53,19 +53,19 @@ const Navbar = ({ session }: { session: Session | null }) => {
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center">
-                <div className="text-sky-500 text-3xl mr-2"><Cross /></div>
-                <span className="text-xl font-bold">SHIFTLY</span>
+                <div className="text-sky-900 text-3xl mr-2"><Cross /></div>
+                <span className="text-xl  text-sky-900 font-bold">SHIFTLY</span>
               </Link>
             </div>
 
             {/* Desktop menu */}
-            <div className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-gray-700 hover:text-blue-500">Home</Link>
-              <Link href="/about" className="text-gray-700 hover:text-blue-500">About</Link>
-              <Link href="/howitworks" className="text-gray-700 hover:text-blue-500">How It Works</Link>
-              <Link href="/join/professionals" className="text-gray-700 hover:text-blue-500">Join</Link>
-              <Link href="/articles" className="text-gray-700 hover:text-blue-500">Articles</Link>
-              <Link href="/contact" className="text-gray-700 hover:text-blue-500">Contact</Link>
+            <div className="hidden md:flex items-center space-x-8 font-bold">
+              <Link href="/" className="text-sky-950 hover:text-blue-500">Home</Link>
+              <Link href="/about" className="text-sky-950 hover:text-blue-500">About</Link>
+              <Link href="/howitworks" className="text-sky-950 hover:text-blue-500">How It Works</Link>
+              <Link href="/join/professionals" className="text-sky-950 hover:text-blue-500">Join</Link>
+              <Link href="/articles" className="text-sky-950 hover:text-blue-500">Articles</Link>
+              <Link href="/contact" className="text-sky-950 hover:text-blue-500">Contact</Link>
             </div>
 
             {/* Right side - Phone and User Menu */}
@@ -80,12 +80,12 @@ const Navbar = ({ session }: { session: Session | null }) => {
               
               {session && session.user && user?.email ? (
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
+                  <DropdownMenuTrigger asChild >
                     <Avatar className="cursor-pointer">
                       {user.image ? (
                         <AvatarImage src={user.image} alt={user.name || ''} />
                       ) : (
-                        <AvatarFallback>{initials}</AvatarFallback>
+                        <AvatarFallback className='bg-gray-200'>{initials}</AvatarFallback>
                       )}
                     </Avatar>
                   </DropdownMenuTrigger>
@@ -108,7 +108,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
                 </DropdownMenu>
               ) : (
                 <Link href="/login" className="bg-gray-500 text-white px-4 py-2 rounded-full hover:bg-gray-600 flex items-center">
-                  <PersonStandingIcon className="mr-2 h-4 w-4" /> Login
+                  <LogIn className="mr-2 h-4 w-4" /> Login
                 </Link>
               )}
             </div>
@@ -132,12 +132,12 @@ const Navbar = ({ session }: { session: Session | null }) => {
           {isOpen && (
             <div className="md:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1">
-                <Link href="/" className="block px-3 py-2 text-gray-700 hover:text-blue-500">Home</Link>
-                <Link href="/about" className="block px-3 py-2 text-gray-700 hover:text-blue-500">About</Link>
-                <Link href="/howitworks" className="block px-3 py-2 text-gray-700 hover:text-blue-500">How It Works</Link>
-                <Link href="/join/professionals" className="block px-3 py-2 text-gray-700 hover:text-blue-500">Join</Link>
-                <Link href="/articles" className="block px-3 py-2 text-gray-700 hover:text-blue-500">Articles</Link>
-                <Link href="/contact" className="block px-3 py-2 text-gray-700 hover:text-blue-500">Contact</Link>
+                <Link href="/" className="block px-3 py-2 text-sky-950 hover:text-blue-500">Home</Link>
+                <Link href="/about" className="block px-3 py-2 text-sky-950 hover:text-blue-500">About</Link>
+                <Link href="/howitworks" className="block px-3 py-2 text-sky-950 hover:text-blue-500">How It Works</Link>
+                <Link href="/join/professionals" className="block px-3 py-2 text-sky-950 hover:text-blue-500">Join</Link>
+                <Link href="/articles" className="block px-3 py-2 text-sky-950 hover:text-blue-500">Articles</Link>
+                <Link href="/contact" className="block px-3 py-2 text-sky-950 hover:text-blue-500">Contact</Link>
                 
                 <div className="px-3 py-2">
                   <div className="flex items-center">
@@ -175,7 +175,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
                     </div>
                   ) : (
                     <Link href="/login" className="mt-4 w-full bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 flex items-center justify-center">
-                      <PersonStandingIcon className="mr-2 h-4 w-4" /> Login
+                      <LogIn className="mr-2 h-4 w-4" /> Login
                     </Link>
                   )}
                 </div>

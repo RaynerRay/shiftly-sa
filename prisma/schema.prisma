@@ -178,11 +178,7 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-enum DoctorStatus {
-  PENDING
-  APPROVED
-  REJECTED
-}
+
 
 model Availability {
   id              String        @id @default(auto()) @map("_id") @db.ObjectId
@@ -199,7 +195,11 @@ model Availability {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-
+enum DoctorStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
 model DoctorProfile {
   id                   String        @id @default(auto()) @map("_id") @db.ObjectId
   userId               String        @unique @db.ObjectId

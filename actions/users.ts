@@ -176,7 +176,10 @@ export async function getDoctors() {
   try {
     const doctors = await prismaClient.user.findMany({
       where: {
-        role: "DOCTOR", // Fetch users with role DOCTOR
+        role: "DOCTOR",
+        doctorProfile: {
+          status: "APPROVED" // Only get verified doctors
+        }
       },
       select: {
         id: true,

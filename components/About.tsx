@@ -85,8 +85,8 @@ export default function About() {
         </p>
         <ol className="list-decimal list-inside space-y-2 text-gray-700">
           <li>Create an account and set up your profile.</li>
-          <li>Healthcare providers can post shifts or browse available professionals.</li>
-          <li>Professionals can browse shifts that match their availability and skills.</li>
+          <li>Healthcare providers can browse available professionals.</li>
+          <li>Professionals can accept shifts that match their availability and skills.</li>
         </ol>
       </div>
 

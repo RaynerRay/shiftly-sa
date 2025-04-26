@@ -8,7 +8,7 @@ import 'react-social-icons/tiktok'
 const page = () => {
   return (
     <div>
-      <div id="page-banner-area" className="page-banner bg-gray-500 text-white py-12">
+      <div id="page-banner-area" className="page-banner bg-gradient-to-r from-sky-500 to-sky-600 text-white py-12">
         <div className="page-banner-title text-center">
           <h2 className="text-3xl font-bold">Contact Us</h2>
           <Link href={"/"} className="flex items-center justify-center my-4">
@@ -34,7 +34,7 @@ const page = () => {
                 <div className="contact-right">
                   <div className="single-contact flex items-center mb-4">
                     <MapPin className="text-gray-50 mr-4  bg-sky-500 p-1" />
-                    <p>61 Prices Avenue, sheffield, UK</p>
+                    <p>Flat 55 Poole BH14 0HW, United Kingdom</p>
                   </div>
                   <div className="single-contact flex items-center mb-4">
                     <Mail className="text-gray-50 mr-4  bg-sky-500 p-1" />
@@ -44,8 +44,6 @@ const page = () => {
                     <Phone className="text-gray-50 mr-4  bg-sky-500 p-1" />
                     <p><a href="tel:+447908029287">+44-794-763-7714</a></p>
                     <p><a href="tel:+447908029287">+44-790-802-9287</a></p>
-                    <span>+44 794 763 7714</span>
-              <span>+44 790 802 9287</span>
                   </div>
                 </div>
                 {/* <div className="social-icon flex space-x-4 mt-6">

@@ -50,7 +50,7 @@ export default async function SearchPage(props: any) { // eslint-disable-line @t
           <SearchBarSP />
         </div>
           
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-6 gap-2">
           {/* Sidebar - Left Column on Desktop */}
           <div className="lg:col-span-1 order-1">
             {/* Advertisements - Only visible on desktop */}
@@ -60,7 +60,7 @@ export default async function SearchPage(props: any) { // eslint-disable-line @t
           </div>
             
           {/* Main Content - Right Column on Desktop, Middle on Mobile */}
-          <div className="lg:col-span-4 order-2">
+          <div className="lg:col-span-5 order-2">
             {/* Doctor Results with pagination */}
             <div className="bg-white rounded-lg shadow p-4">
               {doctors && doctors.length > 0 ? (

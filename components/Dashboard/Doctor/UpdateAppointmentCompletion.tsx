@@ -124,7 +124,7 @@ export default function UpdateAppointmentCompletionForm({
       <div className="w-full">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b">
           <h2 className="scroll-m-20 text-lg sm:text-xl font-semibold tracking-tight py-2 mb-2 sm:mb-3">
-            Update Appointment Completion Status
+            Appointment Completion Status
           </h2>
           <Button
             className="w-full sm:w-auto mb-3 sm:mb-0"

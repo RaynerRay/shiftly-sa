@@ -4,16 +4,18 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 export default async function BlogPostPage(props: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
-  const slug = (props.params as { slug: string }).slug;
+  // Await params before accessing properties
+  const params = await props.params;
+  const slug = (params as { slug: string }).slug;
   
   const response = await getBlogPostBySlug(slug);
-
+  
   if (response.status !== 200 || !response.data) {
     notFound();
   }
-
+  
   const blog = response.data;
-
+  
   return (
     <article className="container mx-auto px-4 py-12 max-w-4xl">
       {/* Title */}
@@ -21,7 +23,7 @@ export default async function BlogPostPage(props: any) { // eslint-disable-line 
         {blog.title}
       </h1>
       {/* Header Image */}
-      <div className="relative w-full h-[400px] mb-8">
+      <div className="relative w-full h-96 mb-8">
         <Image
           src={blog.image}
           alt={blog.title}
@@ -30,7 +32,7 @@ export default async function BlogPostPage(props: any) { // eslint-disable-line 
           priority
         />
       </div>
-
+      
       {/* Categories */}
       <div className="flex flex-wrap gap-2 mb-6">
         {blog.categories.map((category, index) => (
@@ -42,7 +44,7 @@ export default async function BlogPostPage(props: any) { // eslint-disable-line 
           </span>
         ))}
       </div>
-
+      
       {/* Meta Info */}
       <div className="flex items-center gap-4 mb-8 text-gray-600">
         <span className="text-sm">
@@ -50,7 +52,7 @@ export default async function BlogPostPage(props: any) { // eslint-disable-line 
         </span>
         {/* Add more meta info if available, like author or reading time */}
       </div>
-
+      
       {/* Content */}
       <div className="prose prose-lg max-w-none">
         <div
@@ -58,7 +60,7 @@ export default async function BlogPostPage(props: any) { // eslint-disable-line 
           dangerouslySetInnerHTML={{ __html: blog.content ?? "" }}
         />
       </div>
-
+      
       {/* Optional: Add a footer section */}
       <div className="mt-12 pt-8 border-t border-gray-200">
         <div className="flex justify-between items-center">

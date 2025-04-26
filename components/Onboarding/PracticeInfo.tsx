@@ -12,12 +12,6 @@ import { updateDoctorProfile } from "@/actions/onboarding";
 import { useOnboardingContext } from "@/context/context";
 import { hourlyRates } from "@/lib/constants";
 
-// Define the hourly rate options type
-// interface HourlyRateOption {
-//   profession: string;
-//   rate: number;
-// }
-
 export default function PracticeInfo({
   page,
   title,
@@ -32,8 +26,6 @@ export default function PracticeInfo({
   const { savedDBData, setPracticeData } = useOnboardingContext();
   const pathname = usePathname();
   console.log(` new specialty ${specialties}`);
-
-
 
   const initialSpecialities =
     doctorProfile.otherSpecialties.length > 0
@@ -57,20 +49,15 @@ export default function PracticeInfo({
     defaultValues: {
       page: doctorProfile.page || savedDBData.page,
       hourlyWage: doctorProfile.hourlyWage?.toString() || savedDBData.hourlyWage?.toString() || "",
+      deductTaxBeforePayment: doctorProfile.deductTaxBeforePayment !== undefined 
+        ? doctorProfile.deductTaxBeforePayment 
+        : savedDBData.deductTaxBeforePayment !== undefined 
+          ? savedDBData.deductTaxBeforePayment 
+          : true,
     },
   });
   
   const selectedHourlyWage = watch("hourlyWage");
-  
-  // Function to get the display text for the current selection (for info display)
-  // const getSelectedRateInfo = () => {
-  //   if (!selectedHourlyWage) return "";
-    
-  //   const selectedOption = hourlyRates.find(option => option.rate.toString() === selectedHourlyWage);
-  //   if (!selectedOption) return "";
-    
-  //   return `${selectedOption.profession}`;
-  // };
   
   const router = useRouter();
   
@@ -109,41 +96,80 @@ export default function PracticeInfo({
         <p className="text-balance text-muted-foreground">{description}</p>
       </div>
       <form className="py-4 px-4 mx-auto" onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid gap-4 grid-cols-2">
-          <div className="col-span-full sm:col-span-1">
-            <label htmlFor="hourlyWage" className="block text-sm font-medium mb-1">
-              Your Professional Role
-            </label>
-            <select
-              id="hourlyWage"
-              {...register("hourlyWage", { required: "Please select your professional role" })}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">Select your role and experience level</option>
-              {hourlyRates.map((option, index) => (
-                <option key={index} value={option.rate.toString()}>
-                  {option.profession}
-                </option>
-              ))}
-            </select>
-            {errors.hourlyWage && (
-              <p className="text-red-500 text-sm mt-1">{errors.hourlyWage.message}</p>
-            )}
-            
-            {selectedHourlyWage && (
-              <p className="text-sm text-gray-500 mt-1">
-                Hourly rate: £{selectedHourlyWage}/hr
-              </p>
-            )}
-          </div>
-        
-          <ArrayItemsInput
-            setItems={setOtherSpecialties}
-            items={otherSpecialties}
-            itemTitle="Other Specialties"
-          />
-        </div>
-        
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
+  {/* Professional Role Selector */}
+  <div>
+    <label htmlFor="hourlyWage" className="block text-sm font-medium text-gray-700 mb-2">
+      Your Professional Role
+    </label>
+    <select
+      id="hourlyWage"
+      {...register("hourlyWage", { required: "Please select your professional role" })}
+      className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+    >
+      <option value="">Select your role and experience level</option>
+      {hourlyRates.map((option, index) => (
+        <option key={index} value={option.rate.toString()}>
+          {option.profession}
+        </option>
+      ))}
+    </select>
+    {errors.hourlyWage && (
+      <p className="text-red-500 text-sm mt-1">{errors.hourlyWage.message}</p>
+    )}
+    {selectedHourlyWage && (
+      <p className="text-sm text-gray-500 mt-2">
+        {/* Hourly rate: <span className="font-medium text-sky-600">£{selectedHourlyWage}/hr</span> */}
+      </p>
+    )}
+  </div>
+
+  {/* Tax Preference Section - Full Width */}
+  <div className="col-span-full">
+    <label className="block text-sm font-medium text-gray-700 mb-2">
+      Tax Management Preference
+    </label>
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+      <label className="inline-flex items-center">
+        <input
+          type="radio"
+          id="deductTax-yes"
+          value="true"
+          {...register("deductTaxBeforePayment")}
+          className="h-4 w-4 text-sky-600 border-gray-300 focus:ring-sky-500"
+          defaultChecked
+        />
+        <span className="ml-2 text-sm text-gray-700">Let us handle your tax before payment</span>
+      </label>
+      <label className="inline-flex items-center">
+        <input
+          type="radio"
+          id="deductTax-no"
+          value="false"
+          {...register("deductTaxBeforePayment")}
+          className="h-4 w-4 text-sky-600 border-gray-300 focus:ring-sky-500"
+        />
+        <span className="ml-2 text-sm text-gray-700">I will handle my own taxes</span>
+      </label>
+    </div>
+    <p className="text-sm text-gray-500 mt-2">
+      Choose whether you would like taxes automatically deducted or prefer to manage them yourself.
+    </p>
+  </div>
+
+  {/* Other Specialties Input - Full Width */}
+  <div className="col-span-full">
+    <label className="block text-sm font-medium text-gray-700 mb-2">
+      Other Specialties
+    </label>
+    <ArrayItemsInput
+      setItems={setOtherSpecialties}
+      items={otherSpecialties}
+      itemTitle="Other Specialties"
+    />
+  </div>
+</div>
+
         <div className="mt-8 flex justify-center items-center">
           <SubmitButton
             title="Save and Continue"

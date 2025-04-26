@@ -3,9 +3,14 @@ import { getSpecialties } from "@/actions/specialities";
 import OnboardingSteps from "@/components/Onboarding/OnboardingSteps";
 import React from "react";
 
-export default async function OnboardingPage(props: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
-  // Extract the id parameter from props
-  const id = props.params?.id;
+export default async function OnboardingPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  // Await the params object before accessing its properties
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
   
   // Get existing doctor profile and specialties
   const specialties = (await getSpecialties()).data || [];
