@@ -3,7 +3,7 @@
 //   getDoctorAppointments,
 //   getPatientAppointments,
 // } from "@/actions/appointments";
-import { getDoctors } from "@/actions/users";
+import { getDoctorsAdmin } from "@/actions/users";
 import DoctorPanel from "@/components/Dashboard/Doctor/DoctorPanel";
 // import DoctorsPanel from "@/components/Dashboard/Doctor/DoctorsPanel";
 // import ListPanel from "@/components/Dashboard/Doctor/ListPanel";
@@ -38,7 +38,7 @@ export default async function PatientLayout({
   if (user?.role !== "ADMIN") {
     return <NotAuthorized />;
   }
-  const doctors = (await getDoctors()) || [];
+  const doctors = (await getDoctorsAdmin()) || [];
   return (
     <div>
       <div className="grid grid-cols-12">

@@ -1,6 +1,5 @@
 // import { getDoctorAppointments } from "@/actions/appointments";
 import HomeDisplayCard from "@/components/Dashboard/Doctor/HomeDisplayCard";
-import NewButton from "@/components/Dashboard/Doctor/NewButton";
 import NotAuthorized from "@/components/NotAuthorized";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
@@ -22,7 +21,7 @@ export default async function page() {
     <div>
       <div className="py-2  border-b border-gray-200 flex items-center justify-end px-4">
         <div className="flex items-center gap-4">
-          <NewButton title="New Professional" href={`#`} />
+          {/* <NewButton title="New Professional" href={`#`} /> */}
         </div>
       </div>
       <HomeDisplayCard

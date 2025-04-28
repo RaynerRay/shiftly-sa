@@ -1,116 +1,116 @@
-"use client";
-import { cn } from "@/lib/utils";
-import { DoctorStatus } from "@prisma/client";
-import React, { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import ShadSelectInput from "../FormInputs/ShadSelectInput";
-import { Button } from "../ui/button";
-// import SelectInput from "../FormInputs/SelectInput";
-import { updateDoctorProfile } from "@/actions/onboarding";
+"use client"
+import { useState } from "react";
+import { Check, X, AlertTriangle, Loader2 } from "lucide-react";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { updateDoctorStatus } from "@/actions/users"; 
 import toast from "react-hot-toast";
-import { Loader2 } from "lucide-react";
-// import { useRouter } from "next/navigation";
 
-export default function ApproveBtn({
-  status,
-  profileId,
-}: {
+type DoctorStatus = "PENDING" | "APPROVED" | "REJECTED";
+
+interface ApproveBtnProps {
   status: DoctorStatus;
   profileId: string;
-}) {
-  const options = [
-    {
-      label: "PENDING",
-      value: "PENDING",
-    },
-    {
-      label: "APPROVED",
-      value: "APPROVED",
-    },
-    {
-      label: "REJECTED",
-      value: "REJECTED",
-    },
-  ];
-  const initialOption = status;
-  const [selectedOption, setSelectedOption] = useState(initialOption);
-  const [loading, setLoading] = useState(false);
-  console.log(selectedOption);
-  async function updateStatus() {
-    setLoading(true);
-    const data = {
-      status: selectedOption,
-    };
-    setLoading(false);
-    console.log(data);
+}
+
+export default function ApproveBtn({ status, profileId }: ApproveBtnProps) {
+  const [currentStatus, setCurrentStatus] = useState<DoctorStatus>(status);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleStatusChange = async (newStatus: DoctorStatus) => {
+    if (newStatus === currentStatus) return;
+    
+    setIsLoading(true);
     try {
-      const res = await updateDoctorProfile(profileId, { status: selectedOption });
-      if (res?.status === 201) {
-        toast.success("Doctor Status Changed Successfully");
-        setLoading(false);
-    
-        if (typeof window !== "undefined") {
-          window.location.reload();
-        }
+      const response = await updateDoctorStatus(profileId, newStatus);
+      
+      if (response.error) {
+        toast.error(response.error);
+        return;
       }
+      
+      setCurrentStatus(newStatus);
+      toast.success(`Doctor status updated to ${newStatus.toLowerCase()}`);
     } catch (error) {
-      setLoading(false); // <-- should be false on error
-      console.log(error);
+      toast.error("Failed to update status");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const getStatusIcon = () => {
+    if (isLoading) return <Loader2 className="h-4 w-4 animate-spin" />;
     
-  }
+    switch (currentStatus) {
+      case "PENDING":
+        return <AlertTriangle className="h-4 w-4" />;
+      case "APPROVED":
+        return <Check className="h-4 w-4" />;
+      case "REJECTED":
+        return <X className="h-4 w-4" />;
+      default:
+        return <AlertTriangle className="h-4 w-4" />;
+    }
+  };
+
+  const getStatusColor = () => {
+    switch (currentStatus) {
+      case "PENDING":
+        return "bg-yellow-100 text-yellow-800 hover:bg-yellow-200";
+      case "APPROVED":
+        return "bg-green-100 text-green-800 hover:bg-green-200";
+      case "REJECTED":
+        return "bg-red-100 text-red-800 hover:bg-red-200";
+      default:
+        return "bg-gray-100 text-gray-800 hover:bg-gray-200";
+    }
+  };
+
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <button
-          className={cn(
-            "py-1.5 px-3 rounded-md text-xs",
-            status === "APPROVED"
-              ? "bg-green-500 text-white"
-              : status === "PENDING"
-              ? "bg-orange-400"
-              : "bg-red-500 text-white"
-          )}
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button 
+          variant="outline" 
+          size="sm"
+          className={`flex items-center gap-2 px-3 py-1 text-xs font-medium rounded ${getStatusColor()}`}
+          disabled={isLoading}
         >
-          {status}
-        </button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Approve the Doctor</DialogTitle>
-          <DialogDescription>
-            <div className="py-4">
-              <ShadSelectInput
-                label="Status"
-                optionTitle="Status"
-                options={options}
-                selectedOption={selectedOption}
-                setSelectedOption={setSelectedOption}
-              />
-            </div>
-            <DialogFooter>
-              {loading ? (
-                <Button disabled>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Updating please wait...
-                </Button>
-              ) : (
-                <Button onClick={updateStatus} type="submit">
-                  Save changes
-                </Button>
-              )}
-            </DialogFooter>
-          </DialogDescription>
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
+          {getStatusIcon()}
+          {currentStatus.charAt(0).toUpperCase() + currentStatus.slice(1).toLowerCase()}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem 
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={() => handleStatusChange("PENDING")}
+          disabled={currentStatus === "PENDING"}
+        >
+          <AlertTriangle className="h-4 w-4 text-yellow-600" />
+          <span>Pending</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem 
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={() => handleStatusChange("APPROVED")}
+          disabled={currentStatus === "APPROVED"}
+        >
+          <Check className="h-4 w-4 text-green-600" />
+          <span>Approve</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem 
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={() => handleStatusChange("REJECTED")}
+          disabled={currentStatus === "REJECTED"}
+        >
+          <X className="h-4 w-4 text-red-600" />
+          <span>Reject</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

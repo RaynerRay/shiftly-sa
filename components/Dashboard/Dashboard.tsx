@@ -14,7 +14,7 @@ import { getAdminAnalytics } from "@/actions/stats";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import AnalyticsCard from "../AnalyticsCard";
-import { getDoctors } from "@/actions/users";
+import { getDoctorsAdmin } from "@/actions/users";
 import { getInitials } from "@/utils/generateInitials";
 import ApproveBtn from "./ApproveBtn";
 import { getAppointments } from "@/actions/appointments";
@@ -22,7 +22,7 @@ import { PatientProps } from "@/app/(back)/dashboard/doctors/layout";
 
 export default async function Dashboard() {
   const analytics = await getAdminAnalytics();
-  const doctors = (await getDoctors()) || [];
+  const doctors = (await getDoctorsAdmin()) || [];
   const session = await getServerSession(authOptions);
   const user = session?.user;
   const appointments = (await getAppointments()).data || [];
@@ -45,7 +45,7 @@ export default async function Dashboard() {
   const patients = Array.from(uniquePatientsMap.values()) as PatientProps[];
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-      <p>The User Role is {user?.role}</p>
+      <p>{user?.role}</p>
       <h1 className="scroll-m-20 text-2xl font-extrabold tracking-tight mb-3">
         Welcome, Admin {user?.name}
       </h1>

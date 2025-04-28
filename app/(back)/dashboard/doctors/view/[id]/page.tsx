@@ -1,35 +1,28 @@
 import { getDoctorAppointments } from "@/actions/appointments";
 import { getDoctorById, getDoctorProfile } from "@/actions/users";
 import { FaRegFilePdf } from "react-icons/fa";
-// import ApproveBtn from "@/components/Dashboard/ApproveBtn";
+import ApproveBtn from "@/components/Dashboard/ApproveBtn"; // Uncomment this line
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn } from "@/lib/utils";
 import { getNormalDate } from "@/utils/getNormalDate";
-import { timeAgo } from "@/utils/timeAgo";
 import {
   AlertTriangle,
-  CalendarCheck,
-  Check,
-  CircleEllipsis,
   History,
-  X,
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import SubHeading from "@/components/SubHeading";
 
 export default async function DoctorDetailsPage(props: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
-  // Extract the id parameter from props
-  const id = props.params?.id;
+  // Await params before using it
+  const { id } = await props.params;
   
   const appointments = (await getDoctorAppointments(id)).data || [];
   const doctor = await getDoctorById(id);
   const doctorProfile = await getDoctorProfile(id);
-  // const status = doctorProfile?.status ?? "PENDING";
+  const status = doctorProfile?.status ?? "PENDING"; // Uncomment this line
   const dob = doctorProfile?.dob ?? "1992-05-13T21:00:00.000Z";
   const expiry =
     doctorProfile?.medicalLicenseExpiry ?? "1992-05-13T21:00:00.000Z";
-  // console.log(dob);
   
   if (!doctorProfile) {
     return (
@@ -43,304 +36,204 @@ export default async function DoctorDetailsPage(props: any) { // eslint-disable-
   }
   
   return (
-    <div className="p-4">
-      <div className="flex items-center justify-between">
-        <div className="">
-          <h2 className="scroll-m-20 border-b pb-2 text-xl font-semibold tracking-tight first:mt-0">
-            {doctor?.name}
-          </h2>
-          <h2 className="border-b pb-3 mb-3">
-            {doctor?.email} | {doctor?.phone}
-          </h2>
-        </div>
-        <div className="">
-          {/* <ApproveBtn status={status} profileId={doctorProfile?.id ?? ""} /> */}
-          <h2 className="border-b pb-3 mb-3">
-            Appointments ({appointments.length.toString().padStart(2, "0")})
-          </h2>
+    <div className="p-6 bg-white rounded-2xl shadow-lg space-y-6">
+  {/* Header Section */}
+  <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <div>
+      <h2 className="text-2xl font-bold tracking-tight text-slate-800">
+        {doctor?.name}
+      </h2>
+      <p className="text-sm text-slate-500 mt-1">
+        {doctor?.email} &bull; {doctor?.phone}
+      </p>
+    </div>
+    <div className="flex flex-col md:flex-row md:items-center gap-4">
+      <ApproveBtn status={status} profileId={doctorProfile?.id ?? ""} />
+      <span className="text-sm text-slate-600">
+        Appointments <span className="font-semibold">({appointments.length.toString().padStart(2, "0")})</span>
+      </span>
+    </div>
+  </div>
+
+  {/* Tabs Section */}
+  <Tabs defaultValue="details" className="w-full">
+    <TabsList className="flex flex-wrap justify-start gap-2 border-b pb-2">
+      <TabsTrigger value="details">Professional Details</TabsTrigger>
+      <TabsTrigger value="education">Education Info</TabsTrigger>
+      <TabsTrigger value="practice">Practice Info</TabsTrigger>
+      <TabsTrigger value="additional">Additional Info</TabsTrigger>
+      <TabsTrigger value="appointments">Appointments</TabsTrigger>
+    </TabsList>
+
+    {/* Details Tab */}
+    <TabsContent value="details" className="space-y-8">
+      {/* Bio Data */}
+      <div>
+        <SubHeading title="Bio Data" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[
+            { label: "First Name", value: doctorProfile?.firstName },
+            { label: "Last Name", value: doctorProfile?.lastName },
+            { label: "Date of Birth", value: getNormalDate(dob as string) },
+            { label: "Middle Name", value: doctorProfile?.middleName },
+            { label: "Gender", value: doctorProfile?.gender },
+          ].map(({ label, value }, idx) => (
+            <div key={idx} className="flex flex-col text-slate-700">
+              <span className="text-sm font-medium">{label}</span>
+              <span className="text-base">{value || "-"}</span>
+            </div>
+          ))}
         </div>
       </div>
-      <Tabs defaultValue="details" className="w-full">
-        <TabsList>
-          <TabsTrigger value="details">Professional Details</TabsTrigger>
-          <TabsTrigger value="education">Education Info</TabsTrigger>
-          <TabsTrigger value="practice">Practice Info</TabsTrigger>
-          <TabsTrigger value="additional">Additional Info</TabsTrigger>
-          <TabsTrigger value="appointments">Appointments</TabsTrigger>
-        </TabsList>
-        <TabsContent value="details">
-          <div className="p-4">
-            <SubHeading title="Bio Data" />
-            <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
-              <div className="flex items-center">
-                <span className="mr-3">First Name :</span>
-                <span>{doctorProfile?.firstName}</span>
-              </div>
-              <div className="flex items-center">
-                <span className="mr-3">Last Name :</span>
-                <span>{doctorProfile?.lastName}</span>
-              </div>
-              <div className="flex items-center">
-                <span className="mr-3">Date of Birth :</span>
-                <span>{getNormalDate(dob as string)}</span>
-              </div>
-              <div className="flex items-center">
-                <span className="mr-3">Middle Name :</span>
-                <span>{doctorProfile?.middleName}</span>
-              </div>
-              <div className="flex items-center">
-                <span className="mr-3">Gender :</span>
-                <span>{doctorProfile?.gender}</span>
-              </div>
-            </div>
-          </div>
-          <div className="p-4">
-            <SubHeading title="Profile Information" />
-            <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
-              <div className="flex items-center">
-                <span className="mr-3">Medical License :</span>
-                <span>{doctorProfile?.medicalLicense}</span>
-              </div>
-              <div className="flex items-center">
-                <span className="mr-3">Years of Experience :</span>
-                <span>{doctorProfile?.yearsOfExperience}</span>
-              </div>
-            </div>
-            <div className="py-3 space-y-3">
-              <div className="flex items-center">
-                <span className="mr-3">Medical License Expiry :</span>
-                <span>{getNormalDate(expiry as string)}</span>
-              </div>
-              <p>{doctorProfile?.bio}</p>
-            </div>
-          </div>
-          <div className="p-4">
-            <SubHeading title="Contact Information" />
-            <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
-              <div className="flex items-center">
-                <span className="mr-3">Email Address :</span>
-                <span>{doctorProfile?.email}</span>
-              </div>
-              <div className="flex items-center">
-                <span className="mr-3">Phone :</span>
-                <span>{doctorProfile?.phone}</span>
-              </div>
-              {/* <div className="flex items-center">
-                <span className="mr-3">Country :</span>
-                <span>{doctorProfile?.country}</span>
-              </div> */}
-              <div className="flex items-center">
-                <span className="mr-3">City:</span>
-                <span>{doctorProfile?.city}</span>
-              </div>
-              <div className="flex items-center">
-                <span className="mr-3">State :</span>
-                <span>{doctorProfile?.state}</span>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-        <TabsContent value="education">
-          <div className="p-4">
-            <SubHeading title="Education Information" />
-            <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
-              {/* <div className="flex items-center">
-                <span className="mr-3">Graduation Year :</span>
-                <span>{doctorProfile?.graduationYear}</span>
-              </div> */}
-              <div className="flex items-center">
-                {/* <span className="mr-3">Primary Specialization :</span>
-                <span>{doctorProfile?.primarySpecialization}</span> */}
-              </div>
-            </div>
-            <div className="py-4 space-y-4">
-              {/* <div className="flex items-center">
-                <span className="mr-3">Medical School :</span>
-                <span>{doctorProfile?.medicalSchool}</span>
-              </div> */}
-              {doctorProfile?.otherSpecialties && (
-                <div className="">
-                  <h2>Other Specialties</h2>
-                  <div className="flex gap-4 flex-wrap py-3">
-                    {doctorProfile.otherSpecialties.map((item, i) => {
-                      return (
-                        <p key={i} className="py-1.5 px-4 border rounded-md">
-                          {item}
-                        </p>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-              {doctorProfile?.boardCertificates && (
-                <div className="">
-                  <h2>Documents</h2>
-                  <div className="flex gap-4 flex-wrap py-3">
-                    {doctorProfile.boardCertificates.map((item, i) => {
-                      return (
-                        <Link
-                          key={i}
-                          href={item}
-                          target="_blank"
-                          className="py-1.5 px-4 border rounded-md flex items-center"
-                        >
-                          <FaRegFilePdf className="w-4 h-4 mr-2" /> {item}
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </TabsContent>
-        <TabsContent value="practice">
-          <div className="p-4">
-            <SubHeading title="Practice Information" />
-            <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
-              {/* <div className="flex items-center">
-                <span className="mr-3">Hospital Name :</span>
-                <span>{doctorProfile?.hospitalName}</span>
-              </div> */}
-              <div className="flex items-center">
-                <span className="mr-3">Hourly Charge :</span>
-                <span>{doctorProfile?.hourlyWage}</span>
-              </div>
-              {/* <div className="flex items-center">
-                <span className="mr-3">Hospital Address :</span>
-                <span>{doctorProfile?.hospitalAddress}</span>
-              </div> */}
-              {/* <div className="flex items-center">
-                <span className="mr-3">Hospital Contact :</span>
-                <span>{doctorProfile?.hospitalContactNumber}</span>
-              </div> */}
 
-              {/* <div className="flex items-center">
-                <span className="mr-3">Hospital Hours of operation :</span>
-                <span>{doctorProfile?.hospitalHoursOfOperation}</span>
-              </div> */}
-              {/* <div className="flex items-center">
-                <span className="mr-3">Do you accept Insurance :</span>
-                <span>{doctorProfile?.insuranceAccepted}</span>
-              </div> */}
-            </div>
-            <div className="py-4 space-y-4">
-              {/* <div className="flex items-center">
-                <span className="mr-3">Hospital Email address :</span>
-                <span>{doctorProfile?.hospitalEmailAddress}</span>
-              </div> */}
-              {/* <div className="flex items-center">
-                <span className="mr-3">Hospital Website address :</span>
-                <span>{doctorProfile?.hospitalWebsite}</span>
-              </div> */}
+      {/* Profile Information */}
+      <div>
+        <SubHeading title="Profile Information" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="flex flex-col text-slate-700">
+            <span className="text-sm font-medium">Medical License</span>
+            <span className="text-base">{doctorProfile?.medicalLicense || "-"}</span>
+          </div>
+          <div className="flex flex-col text-slate-700">
+            <span className="text-sm font-medium">Years of Experience</span>
+            <span className="text-base">{doctorProfile?.yearsOfExperience || "-"}</span>
+          </div>
+        </div>
+        <div className="mt-4 space-y-2">
+          <div className="flex flex-col text-slate-700">
+            <span className="text-sm font-medium">Medical License Expiry</span>
+            <span className="text-base">{getNormalDate(expiry as string) || "-"}</span>
+          </div>
+          <p className="text-slate-600">{doctorProfile?.bio}</p>
+        </div>
+      </div>
 
-              {doctorProfile?.servicesOffered && (
-                <div className="">
-                  <h2>Hospital Services</h2>
-                  <div className="flex gap-4 flex-wrap py-3">
-                    {doctorProfile.servicesOffered.map((item, i) => {
-                      return (
-                        <p key={i} className="py-1.5 px-4 border rounded-md">
-                          {item}
-                        </p>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
+      {/* Contact Information */}
+      <div>
+        <SubHeading title="Contact Information" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[
+            { label: "Email Address", value: doctorProfile?.email },
+            { label: "Phone", value: doctorProfile?.phone },
+            { label: "City", value: doctorProfile?.city },
+            { label: "State", value: doctorProfile?.state },
+          ].map(({ label, value }, idx) => (
+            <div key={idx} className="flex flex-col text-slate-700">
+              <span className="text-sm font-medium">{label}</span>
+              <span className="text-base">{value || "-"}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </TabsContent>
+
+    {/* Education Tab */}
+    <TabsContent value="education" className="space-y-8">
+      <div>
+        <SubHeading title="Education Information" />
+        {doctorProfile?.otherSpecialties?.length > 0 && (
+          <div className="space-y-4">
+            <h3 className="font-semibold text-slate-700">Other Specialties</h3>
+            <div className="flex flex-wrap gap-3">
+              {doctorProfile.otherSpecialties.map((item, i) => (
+                <p key={i} className="px-4 py-2 bg-slate-100 rounded-lg text-slate-700">
+                  {item}
+                </p>
+              ))}
             </div>
           </div>
-        </TabsContent>
-        <TabsContent value="additional">
-          <div className="p-4">
-            <SubHeading title="Additional Information" />
-
-            <div className="py-4 space-y-4">
-              {/* <div className="flex items-center">
-                <span className="mr-3">Education History :</span>
-                <span>{doctorProfile?.educationHistory}</span>
-              </div> */}
-              {/* <div className="flex items-center">
-                <span className="mr-3">Published Works or Research :</span>
-                <span>{doctorProfile?.research}</span>
-              </div> */}
-              {/* <div className="flex items-center">
-                <span className="mr-3">Accomplishments or awards :</span>
-                <span>{doctorProfile?.accomplishments}</span>
-              </div> */}
-              {doctorProfile?.additionalDocs && (
-                <div className="">
-                  <h2>Additional Documents</h2>
-                  <div className="flex gap-4 flex-wrap py-3">
-                    {doctorProfile.additionalDocs.map((item, i) => {
-                      return (
-                        <Link
-                          key={i}
-                          href={item}
-                          target="_blank"
-                          className="py-1.5 px-4 border rounded-md flex items-center"
-                        >
-                          <FaRegFilePdf className="w-4 h-4 mr-2" /> {item}
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </TabsContent>
-        <TabsContent value="appointments">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 p-4">
-            {appointments.map((item) => {
-              return (
+        )}
+        {doctorProfile?.boardCertificates?.length > 0 && (
+          <div className="space-y-4">
+            <h3 className="font-semibold text-slate-700">Documents</h3>
+            <div className="flex flex-wrap gap-3">
+              {doctorProfile.boardCertificates.map((item, i) => (
                 <Link
-                  key={item.id}
-                  href={`/dashboard/doctor/appointments/view/${item.id}`}
-                  className={cn(
-                    "border mb-2 border-gray-300 shadow-sm text-xs bg-white py-3 px-2 inline-block w-full rounded-md dark:text-slate-900"
-                  )}
+                  key={i}
+                  href={item}
+                  target="_blank"
+                  className="flex items-center gap-2 px-4 py-2 bg-slate-100 rounded-lg hover:bg-slate-200 transition text-slate-700"
                 >
-                  <div className="flex justify-between items-center pb-2">
-                    <h2>
-                      {item.firstName} {item.lastName}
-                    </h2>
-                    <div className="flex items-center ">
-                      <History className="w-4 h-4 mr-2" />
-                      <span>{timeAgo(item.createdAt)}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 border-b">
-                    <div className="flex items-center font-semibold">
-                      <CalendarCheck className="w-4 h-4 mr-2" />
-                      <span>{item.appointmentFormattedDate}</span>
-                    </div>
-                    <span className="font-semibold">
-                      {item.appointmentTime}
-                    </span>
-                  </div>
-                  <div
-                    className={cn(
-                      "flex items-center pt-2 text-blue-600",
-                      item.status === "approved" &&
-                        "text-green-600 font-semibold"
-                    )}
-                  >
-                    {item.status === "pending" ? (
-                      <CircleEllipsis className="mr-2 w-4 h-4" />
-                    ) : item.status === "approved" ? (
-                      <Check className="mr-2 w-4 h-4" />
-                    ) : (
-                      <X className="mr-2 w-4 h-4" />
-                    )}
-                    <span>{item.status}</span>
-                  </div>
+                  <FaRegFilePdf className="w-4 h-4" /> {item}
                 </Link>
-              );
-            })}
+              ))}
+            </div>
           </div>
-        </TabsContent>
-      </Tabs>
-    </div>
+        )}
+      </div>
+    </TabsContent>
+
+    {/* Practice Tab */}
+    <TabsContent value="practice" className="space-y-8">
+      <div>
+        <SubHeading title="Practice Information" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="flex flex-col text-slate-700">
+            <span className="text-sm font-medium">Hourly Charge</span>
+            <span className="text-base">{doctorProfile?.hourlyWage || "-"}</span>
+          </div>
+        </div>
+        {doctorProfile?.servicesOffered?.length > 0 && (
+          <div className="space-y-4 mt-6">
+            <h3 className="font-semibold text-slate-700">Hospital Services</h3>
+            <div className="flex flex-wrap gap-3">
+              {doctorProfile.servicesOffered.map((item, i) => (
+                <p key={i} className="px-4 py-2 bg-slate-100 rounded-lg text-slate-700">
+                  {item}
+                </p>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </TabsContent>
+
+    {/* Additional Tab */}
+    <TabsContent value="additional" className="space-y-8">
+      <div>
+        <SubHeading title="Additional Information" />
+        {doctorProfile?.additionalDocs?.length > 0 && (
+          <div className="space-y-4">
+            <h3 className="font-semibold text-slate-700">Additional Documents</h3>
+            <div className="flex flex-wrap gap-3">
+              {doctorProfile.additionalDocs.map((item, i) => (
+                <Link
+                  key={i}
+                  href={item}
+                  target="_blank"
+                  className="flex items-center gap-2 px-4 py-2 bg-slate-100 rounded-lg hover:bg-slate-200 transition text-slate-700"
+                >
+                  <FaRegFilePdf className="w-4 h-4" /> {item}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </TabsContent>
+
+    {/* Appointments Tab */}
+    <TabsContent value="appointments" className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {appointments.map((item) => (
+          <Link
+            key={item.id}
+            href={`/dashboard/doctor/appointments/view/${item.id}`}
+            className="border border-slate-200 hover:border-slate-300 rounded-xl p-4 shadow-sm hover:shadow-md transition bg-white flex flex-col"
+          >
+            <div className="flex justify-between items-center mb-2">
+              <h4 className="text-sm font-medium text-slate-800">
+                {item.firstName} {item.lastName}
+              </h4>
+              <History className="w-4 h-4 text-slate-400" />
+            </div>
+            <p className="text-xs text-slate-500">Appointment Details...</p>
+          </Link>
+        ))}
+      </div>
+    </TabsContent>
+  </Tabs>
+</div>
+
   );
 }

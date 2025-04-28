@@ -89,7 +89,7 @@ export default function BioDataForm({
     data.trackingNumber = generateTrackingNumber();
     // data.
     data.page = page;
-    console.log(data);
+    // console.log(data);
     try {
       //save data to db
       if (formId) {

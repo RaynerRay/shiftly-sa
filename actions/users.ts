@@ -11,6 +11,8 @@ import {
   createDoctorProfile } from "./onboarding";
 import { generateTrackingNumber } from "@/lib/generateTracking";
 import { isEmailBlacklisted } from "@/lib/isEmailBlackListed";
+
+
 export async function createUser(formData: RegisterInputProps) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   const { fullName, email, role, phone, password, plan } = formData;
@@ -108,8 +110,8 @@ export async function createUser(formData: RegisterInputProps) {
     });
    
     
-    console.log(token);
-    console.log(sendMail);
+    // console.log(token);
+    // console.log(sendMail);
     // console.log(newUser);
     return {
       data: newUser,
@@ -156,6 +158,44 @@ export async function updateUserById(id: string) {
   }
 }
 
+// Add this function to your actions/users.ts file
+
+export async function updateDoctorStatus(profileId: string, status: "PENDING" | "APPROVED" | "REJECTED") {
+  "use server";
+  
+  try {
+    if (!profileId) {
+      return {
+        error: "Profile ID is required",
+        status: 400,
+        data: null,
+      };
+    }
+
+    const updatedProfile = await prismaClient.doctorProfile.update({
+      where: {
+        id: profileId,
+      },
+      data: {
+        status,
+      },
+    });
+
+    return {
+      data: updatedProfile,
+      error: null,
+      status: 200,
+    };
+  } catch (error) {
+    console.error("Error updating doctor status:", error);
+    return {
+      data: null,
+      error: "Failed to update doctor status",
+      status: 500,
+    };
+  }
+}
+
 // export async function getDoctors() {
 //   try {
 //     const doctors = await prismaClient.user.findMany({
@@ -180,6 +220,57 @@ export async function getDoctors() {
         doctorProfile: {
           status: "APPROVED" // Only get verified doctors
         }
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        slug: true,
+        phone: true,
+        doctorProfile: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            gender: true,
+            bio: true,
+            profilePicture: true,
+            profession: true,
+            hourlyWage: true,
+            status: true,
+            dob: true,
+            middleName: true,
+            
+            // Add other specific fields you need from the DoctorProfile
+            availability: {
+              select: {
+                monday: true,
+                tuesday: true,
+                wednesday: true,
+                thursday: true,
+                friday: true,
+                saturday: true,
+                sunday: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return doctors;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function getDoctorsAdmin() {
+  try {
+    const doctors = await prismaClient.user.findMany({
+      where: {
+        role: "DOCTOR",
+        
       },
       select: {
         id: true,

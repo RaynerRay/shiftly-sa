@@ -66,6 +66,13 @@ export default function PracticeInfo({
     data.otherSpecialties = otherSpecialties;
     data.servicesOffered = services;
     data.hourlyWage = Number(data.hourlyWage);
+    
+    // Convert string representation to boolean
+    // The `as unknown as string` cast first treats the value as unknown, then as string
+    // This avoids the TypeScript error while still performing the conversion
+    const taxValue = data.deductTaxBeforePayment as unknown as string;
+    data.deductTaxBeforePayment = taxValue === "true";
+    
     console.log(userId, formId);
     console.log(data);
     setIsLoading(true);

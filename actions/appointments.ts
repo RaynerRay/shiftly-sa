@@ -4,7 +4,7 @@ import { AppointmentUpdateProps } from "@/components/Dashboard/Doctor/UpdateAppo
 import NewAppointmentEmail from "@/components/Emails/new-appointment";
 import { prismaClient } from "@/lib/db";
 import { AppointmentProps, ServiceProps } from "@/types/types";
-import { Appointment } from "@prisma/client";
+import { Appointment, PaymentStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -112,6 +112,35 @@ export async function updateAppointmentById(
     };
   } catch (error) {
     console.log(error);
+    return {
+      data: null,
+      status: 500,
+      error,
+    };
+  }
+}
+
+export async function updateAppointmentStatus(id: string, paymentStatus: PaymentStatus) {
+  try {
+    const updatedAppointment = await prismaClient.appointment.update({
+      where: {
+        id,
+      },
+      data: {
+        paymentStatus,
+      },
+    });
+    
+    revalidatePath(`/dashboard/doctor/appointments/view/${id}`);
+    revalidatePath("/dashboard/doctor/appointments");
+    
+    return {
+      data: updatedAppointment,
+      status: 200,
+      error: null,
+    };
+  } catch (error) {
+    console.error("Error updating appointment payment status:", error);
     return {
       data: null,
       status: 500,

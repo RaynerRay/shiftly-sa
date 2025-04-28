@@ -1,5 +1,4 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
-// import { UploadThingError } from "uploadthing/server";
 
 const f = createUploadthing();
 
@@ -9,38 +8,38 @@ export const ourFileRouter = {
   doctorProfileImage: f({ image: { maxFileSize: "1MB" } }).onUploadComplete(
     async ({  file }) => {
       console.log("file url", file.url);
-      return { uploadedBy: "JB" };
+      return { uploadedBy: "Shiftly" };
     }
   ),
   serviceImage: f({ image: { maxFileSize: "1MB" } }).onUploadComplete(
     async ({  file }) => {
       console.log("file url", file.url);
-      return { uploadedBy: "JB" };
+      return { uploadedBy: "Shiftly" };
     }
   ),
   BlogImage: f({ image: { maxFileSize: "1MB" } }).onUploadComplete(
     async ({  file }) => {
       console.log("file url", file.url);
-      return { uploadedBy: "JB" };
+      return { uploadedBy: "Shiftly" };
     }
   ),
   doctorProfessionDocs: f({
     pdf: { maxFileSize: "4MB", maxFileCount: 4 },
   }).onUploadComplete(async ({  file }) => {
     console.log("file url", file.url);
-    return { uploadedBy: "JB" };
+    return { uploadedBy: "Shiftly" };
   }),
   patientMedicalFiles: f({
     pdf: { maxFileSize: "4MB", maxFileCount: 4 },
   }).onUploadComplete(async ({  file }) => {
     console.log("file url", file.url);
-    return { uploadedBy: "JB" };
+    return { uploadedBy: "Shiftly" };
   }),
   additionalDocs: f({
     pdf: { maxFileSize: "4MB", maxFileCount: 4 },
   }).onUploadComplete(async ({  file }) => {
     console.log("file url", file.url);
-    return { uploadedBy: "JB" };
+    return { uploadedBy: "Shiftly" };
   }),
 } satisfies FileRouter;
 
