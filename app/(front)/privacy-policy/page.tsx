@@ -5,7 +5,7 @@ export default function page() {
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       <h1 className="text-3xl font-bold text-center">Privacy Policy</h1>
       <p className="text-gray-700">
-        Your privacy is important to us. This Privacy Policy explains how Shiftly.uk
+        Your privacy is important to us. This Privacy Policy explains how Shiftly
         collects, uses, and protects your personal information.
       </p>
 

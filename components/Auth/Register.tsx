@@ -197,7 +197,7 @@ export default function RegisterWithBg({ role = "USER", plan = "" }: RegisterFor
   <div className="h-full w-full flex items-center justify-center p-12">
     <div className="max-w-lg">
       <h2 className="text-3xl font-bold text-neutral-800 dark:text-neutral-100 mb-8">
-        Welcome to Shiftly – Instant Staffing for UK Healthcare Providers
+        Welcome to Shiftly - Instant Staffing for South African Healthcare Providers
       </h2>
 
       <div className="space-y-6">

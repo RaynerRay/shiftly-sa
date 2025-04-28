@@ -24,7 +24,7 @@ const faqs = {
     },
     {
       qn: "What are the qualifications to become a Shiftly worker?",
-      ans: "For carers, you need at least 6 months of work experience in the UK. If you require a visa to work, it must be valid and permit self-employment. Nurses need a minimum of 2 years' experience and must hold a UK pin number.",
+      ans: "For carers, you need at least 6 months of work experience in the SA. If you require a visa to work, it must be valid and permit self-employment. Nurses need a minimum of 2 years' experience and must hold a UK pin number.",
     },
     {
       qn: "How often should I update my availability?",

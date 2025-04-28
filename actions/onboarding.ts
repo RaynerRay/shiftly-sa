@@ -204,13 +204,13 @@ export async function completeProfile(id: string | undefined, data: any) {
       //send a welcome email
       const firstName = existingProfile.firstName;
       const email = existingProfile.email as string;
-      const previewText = "Welcome to Shiftly UK ";
+      const previewText = "Welcome to Shiftly South Africa ";
       const message =
-        "Thanks for joining Shiftly UK — we are excited to have you onboard! If you have any questions, feel free to WhatsApp us at +44 794 763 7714.";
+        "Thanks for joining Shiftly SA — we are excited to have you onboard! If you have any questions, feel free to WhatsApp us at +44 794 763 7714.";
       const sendMail = await resend.emails.send({
         from: "Shiftly <noreply@shiftly.uk>",
         to: email,
-        subject: "Welcome to Shiftly UK",
+        subject: "Welcome to Shiftly SA",
         react: WelcomeEmail({ firstName, previewText, message }),
       });
       const updatedProfile = await prismaClient.doctorProfile.update({

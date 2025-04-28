@@ -32,12 +32,12 @@ const Hero = () => {
                   />
                 </div>
 
-                <span className="md:block hidden text-sky-600 mt-2">across the UK</span>
+                <span className="md:block hidden text-sky-600 mt-2">across the South Africa</span>
               </h1>
 
               <p className="text-sm text-sky-800 md:text-lg md:mb-8 mb-2">
                 Find and book appointments with top healthcare workers across
-                the UK with our simple, secure platform.
+                the SA with our simple, secure platform.
               </p>
 
               {/* Feature Icons */}

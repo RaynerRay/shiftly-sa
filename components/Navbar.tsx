@@ -35,7 +35,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
         <div className="hidden md:flex w-full py-2 px-4 justify-between items-center border-b">
           <div className="flex items-center">
             <Mail className="w-4 h-4 mr-2 text-white" />
-            <span className="text-gray-50 text-sm">info@shiftly.uk</span>
+            <span className="text-gray-50 text-sm">info@shiftly.co.za</span>
           </div>
           {/* <div className="flex gap-4">
             <Facebook className="w-4 h-4 text-gray-50 hover:text-blue-500 cursor-pointer" />

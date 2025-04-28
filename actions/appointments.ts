@@ -43,7 +43,7 @@ export async function createAppointment(data: AppointmentProps) {
     // Add error handling for email sending
     try {
       const sendMail = await resend.emails.send({
-        from: "Medical App <noreply@shiftly.uk>",
+        from: "Shiftly <noreply@shiftly.uk>",
         to: doctorMail,
         subject: "New Appointment Approval Needed",
         react: NewAppointmentEmail({ firstName, link, message }),

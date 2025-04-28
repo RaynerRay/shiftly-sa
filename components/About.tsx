@@ -24,10 +24,10 @@ export default function About() {
         {/* Content Section */}
         <div className="w-full md:w-1/2 space-y-4">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
-            Welcome to Shiftly - Instant Staffing for UK Healthcare Providers
+            Welcome to Shiftly - Instant Staffing for SA Healthcare Providers
           </h2>
           <p className="text-gray-600">
-            Shiftly revolutionises healthcare staffing in the UK, offering instant connections between healthcare providers and qualified professionals. Our platform ensures you find the right shifts or staff seamlessly, anytime.
+            Shiftly revolutionises healthcare staffing in the SA, offering instant connections between healthcare providers and qualified professionals. Our platform ensures you find the right shifts or staff seamlessly, anytime.
           </p>
           
           {/* Bullet Points */}
@@ -59,7 +59,7 @@ export default function About() {
       <div className="bg-gray-50 p-8 rounded-lg shadow ">
         <h3 className="text-2xl font-semibold text-gray-800 mb-4">Why Choose Shiftly?</h3>
         <p className="text-gray-600 mb-4">
-          Shiftly simplifies staffing challenges with cutting-edge technology. Here is why Shiftly is the go-to platform for healthcare staffing in the UK:
+          Shiftly simplifies staffing challenges with cutting-edge technology. Here is why Shiftly is the go-to platform for healthcare staffing in the SA:
         </p>
         <ul className="space-y-3">
           <li className="flex items-center space-x-2 text-gray-700">
