@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import SelectedTimes from "./SelectedTimes";
 import { timesArray } from "@/config/constants";
+import { prismaClient } from "@/lib/db";
 
 export default function Monday({
   profile,
@@ -47,6 +48,7 @@ export default function Monday({
     setLoading(true);
     try {
       if (profile?.id && availability?.id) {
+        // If availability already exists, update it
         const data = {
           monday: selectedTimes,
           doctorProfileId: profile.id,
@@ -54,24 +56,44 @@ export default function Monday({
         await updateAvailabilityById(availability?.id, data);
         setLoading(false);
         toast.success("Settings Updated Successfully");
-        // console.log(data);
       } else if (profile?.id) {
-        // console.log("id not set");
-        const data = {
-          monday: selectedTimes,
-          doctorProfileId: profile.id,
-        };
-        await createAvailability(data);
-        toast.success("Settings Updated Successfully");
-        setLoading(false);
+        // Check if availability exists for this doctorProfileId
+        const existingAvailability = await prismaClient.availability.findUnique({
+          where: {
+            doctorProfileId: profile.id,
+          },
+        });
+  
+        if (existingAvailability) {
+          // If found, update it
+          const data = {
+            monday: selectedTimes,
+            doctorProfileId: profile.id,
+          };
+          await updateAvailabilityById(existingAvailability.id, data);
+          setLoading(false);
+          toast.success("Settings Updated Successfully");
+        } else {
+          // If not found, create new
+          const data = {
+            monday: selectedTimes,
+            doctorProfileId: profile.id,
+          };
+          await createAvailability(data);
+          setLoading(false);
+          toast.success("Settings Updated Successfully");
+        }
       } else {
         // console.log("Profile id Not set");
+        setLoading(false);
       }
     } catch (error) {
       setLoading(false);
       console.log(error);
+      toast.error("Something went wrong");
     }
   }
+  
   const [loading, setLoading] = useState(false);
   return (
     <SelectedTimes

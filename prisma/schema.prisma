@@ -7,6 +7,77 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Availability {
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  doctorProfileId String        @unique @db.ObjectId
+  doctorProfile   DoctorProfile @relation(fields: [doctorProfileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  monday          String[]
+  tuesday         String[]
+  wednesday       String[]
+  thursday        String[]
+  friday          String[]
+  saturday        String[]
+  sunday          String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+enum DoctorStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+model DoctorProfile {
+  id                   String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId               String        @unique @db.ObjectId
+  user                 User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  status               DoctorStatus  @default(PENDING)
+  trackingNumber       String        @unique
+  firstName            String
+  lastName             String
+  middleName           String?
+  dob                  DateTime?
+  gender               String?
+  page                 String?
+  availability         Availability?
+  profilePicture       String?
+  bio                  String?
+  medicalLicense       String?
+  medicalLicenseExpiry DateTime?
+  yearsOfExperience    Int?
+
+  email             String?
+  phone             String?
+  city              String?
+  state             String?
+  address           String?
+  profession        String?
+  otherSpecialties  String[]
+  boardCertificates String[]
+  servicesOffered   String[]
+  accomplishments   String?
+  refereeEmail      String?
+  refereeName       String?
+  refereeNumber     String?
+
+  additionalDocs String[]
+  operationMode  String?     @default("Telehealth visit")
+  hourlyWage     Int         @default(15)
+
+  deductTaxBeforePayment Boolean     @default(true) // New field
+  band            String?
+  
+  //SERVICES
+  serviceId      String?     @db.ObjectId
+  service        Service?    @relation(fields: [serviceId], references: [id])
+  specialtyId    String?     @db.ObjectId
+  specialty      Speciality? @relation(fields: [specialtyId], references: [id])
+  symptomIds     String[]    @db.ObjectId
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime?   @updatedAt
+}
+
+
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
   userId            String  @db.ObjectId
@@ -180,72 +251,3 @@ model User {
 
 
 
-model Availability {
-  id              String        @id @default(auto()) @map("_id") @db.ObjectId
-  doctorProfileId String        @unique @db.ObjectId
-  doctorProfile   DoctorProfile @relation(fields: [doctorProfileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  monday          String[]
-  tuesday         String[]
-  wednesday       String[]
-  thursday        String[]
-  friday          String[]
-  saturday        String[]
-  sunday          String[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-enum DoctorStatus {
-  PENDING
-  APPROVED
-  REJECTED
-}
-model DoctorProfile {
-  id                   String        @id @default(auto()) @map("_id") @db.ObjectId
-  userId               String        @unique @db.ObjectId
-  user                 User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  status               DoctorStatus  @default(PENDING)
-  trackingNumber       String        @unique
-  firstName            String
-  lastName             String
-  middleName           String?
-  dob                  DateTime?
-  gender               String?
-  page                 String?
-  availability         Availability?
-  profilePicture       String?
-  bio                  String?
-  medicalLicense       String?
-  medicalLicenseExpiry DateTime?
-  yearsOfExperience    Int?
-
-  email             String?
-  phone             String?
-  city              String?
-  state             String?
-  address           String?
-  profession        String?
-  otherSpecialties  String[]
-  boardCertificates String[]
-  servicesOffered   String[]
-  accomplishments   String?
-  refereeEmail      String?
-  refereeName       String?
-  refereeNumber     String?
-
-  additionalDocs String[]
-  operationMode  String?     @default("Telehealth visit")
-  hourlyWage     Int         @default(15)
-
-  deductTaxBeforePayment Boolean     @default(true) // New field
-  band            String?
-  
-  //SERVICES
-  serviceId      String?     @db.ObjectId
-  service        Service?    @relation(fields: [serviceId], references: [id])
-  specialtyId    String?     @db.ObjectId
-  specialty      Speciality? @relation(fields: [specialtyId], references: [id])
-  symptomIds     String[]    @db.ObjectId
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime?   @updatedAt
-}

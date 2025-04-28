@@ -206,9 +206,9 @@ export async function completeProfile(id: string | undefined, data: any) {
       const email = existingProfile.email as string;
       const previewText = "Welcome to Shiftly UK ";
       const message =
-        "Thank you for joining Shiftly UK, we are so grateful that we have onboard ";
+        "Thanks for joining Shiftly UK — we are excited to have you onboard! If you have any questions, feel free to WhatsApp us at +44 794 763 7714.";
       const sendMail = await resend.emails.send({
-        from: "Medical App <noreply@shiftly.uk>",
+        from: "Shiftly <noreply@shiftly.uk>",
         to: email,
         subject: "Welcome to Shiftly UK",
         react: WelcomeEmail({ firstName, previewText, message }),

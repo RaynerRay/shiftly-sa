@@ -9,40 +9,61 @@ import { revalidatePath } from "next/cache";
 import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+
+
 export async function createAppointment(data: AppointmentProps) {
+  // Create a new instance of Resend in the function scope
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  
   try {
- 
     const doctor = await prismaClient.user.findUnique({
       where: {
         id: data.doctorId,
       },
     });
+    
+    if (!doctor || !doctor.email) {
+      return {
+        data: null,
+        status: 400,
+        error: "Doctor not found or missing email",
+      };
+    }
+    
     const newAppointment = await prismaClient.appointment.create({
       data,
     });
-    const firstName = doctor?.name;
-    const doctorMail = doctor?.email;
+    
+    const firstName = doctor.name;
+    const doctorMail = doctor.email;
     const link = `${baseUrl}/dashboard/doctor/appointments/view/${newAppointment.id}`;
-    const message =
-      "You have a new appointment scheduled. Please review and approve it by clicking the button below.";
-    const sendMail = await resend.emails.send({
-      from: "Medical App <noreply@shiftly.uk>",
-      to: doctorMail ?? "",
-      subject: "New Appointment Approval Needed",
-      react: NewAppointmentEmail({ firstName, link, message }),
-    });
+    const message = "hi, you have a new Shiftly appointment. Please review the details and either accept or reject it by clicking the button below.";
+    
+    // Add error handling for email sending
+    try {
+      const sendMail = await resend.emails.send({
+        from: "Medical App <noreply@shiftly.uk>",
+        to: doctorMail,
+        subject: "New Appointment Approval Needed",
+        react: NewAppointmentEmail({ firstName, link, message }),
+      });
+      
+      console.log("Email sent successfully:", sendMail);
+    } catch (emailError) {
+      console.error("Failed to send email:", emailError);
+      // Continue execution even if email fails
+    }
+    
     revalidatePath("/dashboard/doctor/appointments");
-    // console.log(newAppointment);
-
-    //Send the Email to the Doctor
-    //
+    
     return {
       data: newAppointment,
       status: 201,
       error: null,
     };
   } catch (error) {
-    console.log(error);
+    console.error("Error creating appointment:", error);
     return {
       data: null,
       status: 500,
