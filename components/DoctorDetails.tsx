@@ -407,7 +407,7 @@ const handleTimeSelection = (time: string) => {
                  
                 </div>
                 <TextAreaInput
-                  label="Brief Description Of The Work"
+                  label="Description Of The Work"
                   register={register}
                   name="appointmentReason"
                   errors={errors}
