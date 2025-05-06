@@ -13,7 +13,7 @@ const Adverts = () => {
             </div>
             <p className="text-sky-800 text-sm font-bold">Nationwide Coverage</p>
             <p className="text-sky-600 text-sm">
-              Access vetted healthcare professionals across the SA.
+              Access vetted healthcare professionals across the South Africa.
             </p>
           </div>
 

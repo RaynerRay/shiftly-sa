@@ -177,7 +177,7 @@ export default function LoginFormWithBg({ returnUrl }: LoginFormProps) {
           Shiftly is changing the face of healthcare staffing
         </h2>
         <p className="text-neutral-600 dark:text-neutral-300">
-          Healthcare providers across South Africa are turning to Shiftly for fast, reliable, and qualified staff—on demand.
+          Healthcare providers across the South Africa are turning to Shiftly for fast, reliable, and qualified staff—on demand.
         </p>
       </div>
       <div className="relative bg-white dark:bg-neutral-800 p-6 rounded-2xl shadow-xl">

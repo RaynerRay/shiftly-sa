@@ -34,16 +34,16 @@ const page = () => {
                 <div className="contact-right">
                   <div className="single-contact flex items-center mb-4">
                     <MapPin className="text-gray-50 mr-4  bg-sky-500 p-1" />
-                    <p>Flat 55 Poole BH14 0HW, United Kingdom</p>
+                    <p>130 South Street, Centurion, Gauteng</p>
                   </div>
                   <div className="single-contact flex items-center mb-4">
                     <Mail className="text-gray-50 mr-4  bg-sky-500 p-1" />
-                    <p><a href="mailto:Feedback@property.com">info@shitly.uk</a></p>
+                    <p><a href="mailto:Feedback@property.com">info@shitly.co.za</a></p>
                   </div>
                   <div className="single-contact flex items-center mb-4">
                     <Phone className="text-gray-50 mr-4  bg-sky-500 p-1" />
-                    <p><a href="tel:+447908029287">+44-794-763-7714</a></p>
-                    <p><a href="tel:+447908029287">+44-790-802-9287</a></p>
+                    <p><a href="tel:+447908029287">+27-69-619-2098</a></p>
+                    <p><a href="tel:+447908029287">+27-74-799-6927</a></p>
                   </div>
                 </div>
                 {/* <div className="social-icon flex space-x-4 mt-6">
@@ -105,8 +105,8 @@ const page = () => {
                 </div>
               </form> */}
                 <div className="social-icon flex space-x-4 mt-6">
-                <SocialIcon url="https://x.com/MarketHub_Zim" target="_blank" />
-                <SocialIcon url="https://www.tiktok.com/@markethubzim" target="_blank" />
+                <SocialIcon url="https://x.com/shiftly" target="_blank" />
+                {/* <SocialIcon url="https://www.tiktok.com/@mark" target="_blank" /> */}
                   {/* <Link className="facebook" href="#" target="_blank">
                     <SocialIcon url="www.facebook.com" />
                   </Link>

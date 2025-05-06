@@ -5,7 +5,7 @@ export default function page() {
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       <h1 className="text-3xl font-bold text-center">Cookie Policy</h1>
       <p className="text-gray-700">
-        Shiftly uses cookies to enhance your browsing experience. This policy explains
+        Shiftly.uk uses cookies to enhance your browsing experience. This policy explains
         how we use cookies and how you can manage them.
       </p>
 

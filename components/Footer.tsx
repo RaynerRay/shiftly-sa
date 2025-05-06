@@ -29,15 +29,15 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
               <MapPin className="w-5 h-5 text-gray-400" />
-              <span>Flat 55 Poole BH14 0HW, United Kingdom</span>
+              <span>130 South Street, Centurion, Gauteng</span>
             </div>
             <div className="flex items-center space-x-3">
               <Phone className="w-5 h-5 text-gray-400" />
-              <span>+44 794 763 7714</span>
+              <span>+27-74-799-6927</span>
             </div>
             <div className="flex items-center space-x-3">
               <Phone className="w-5 h-5 text-gray-400" />
-              <span>+44 790 802 9287</span>
+              <span>+27-69-619-2098</span>
             </div>
             <div className="flex items-center space-x-3">
               <Mail className="w-5 h-5 text-gray-400" />

@@ -24,7 +24,7 @@ const faqs = {
     },
     {
       qn: "What are the qualifications to become a Shiftly worker?",
-      ans: "For carers, you need at least 6 months of work experience in the SA. If you require a visa to work, it must be valid and permit self-employment. Nurses need a minimum of 2 years' experience and must hold a UK pin number.",
+      ans: "For carers, you need at least 6 months of work experience in the South Africa. If you require a visa to work, it must be valid and permit self-employment. Nurses need a minimum of 2 years' experience and must hold a UK pin number.",
     },
     {
       qn: "How often should I update my availability?",
@@ -33,7 +33,7 @@ const faqs = {
    
     {
       qn: "What documents are required during the registration process?",
-      ans: "Carers should provide their up-to-date Mandatory Training Certificates or, optionally, an NVQ Diploma/Care Certificate. For specialist skills like medication administration or having a driving license, related certificates are needed. Nurses must provide their Mandatory Training Certificates. Both roles require a clear DBS certificate (no older than 2 years, ideally on a live register), a recent professional photo, and contact details for two referees.",
+      ans: "Carers should provide their up-to-date Mandatory Training Certificates or, optionally, an NVQ Diploma/Care Certificate. For specialist skills like medication administration or having a driving license, related certificates are needed. Nurses must provide their Mandatory Training Certificates. Both roles require a clear Disclosure and Barring Service certificate (DBS) certificate (no older than 2 years, ideally on a live register), a recent professional photo, and contact details for two referees.",
     },
     {
       qn: "Who can serve as my referee?",

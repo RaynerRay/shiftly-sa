@@ -36,4 +36,3 @@ export const locations = [
   { value: "middelburg", label: "Middelburg", country: "South Africa" },
   { value: "secunda", label: "Secunda", country: "South Africa" },
 ];
-
