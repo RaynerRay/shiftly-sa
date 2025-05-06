@@ -1,6 +1,6 @@
 // import { getDoctorAppointments } from "@/actions/appointments";
-import { getInboxMessages } from "@/actions/inbox";
-import HomeDisplayCard from "@/components/Dashboard/Doctor/HomeDisplayCard";
+// import { getInboxMessages } from "@/actions/inbox";
+// import HomeDisplayCard from "@/components/Dashboard/Doctor/HomeDisplayCard";
 import NewButton from "@/components/Dashboard/Doctor/NewButton";
 import NotAuthorized from "@/components/NotAuthorized";
 import { authOptions } from "@/lib/auth";
@@ -13,7 +13,7 @@ export default async function page() {
   if (user?.role !== "DOCTOR") {
     return <NotAuthorized />;
   }
-  const messages = (await getInboxMessages(user?.id)).data || [];
+  // const messages = (await getInboxMessages(user?.id)).data || [];
   return (
     <div>
       <div className="py-2  border-b border-gray-200 flex items-center justify-end px-4">
@@ -21,11 +21,11 @@ export default async function page() {
           <NewButton title="New Message" href="/dashboard/doctor/inbox/new" />
         </div>
       </div>
-      <HomeDisplayCard
-        title="Inbox Message"
+      {/* <HomeDisplayCard
+        title="Inbox Messagesss"
         newAppointmentLink="/dashboard/doctor/inbox/new"
         count={messages.length}
-      />
+      /> */}
     </div>
   );
 }

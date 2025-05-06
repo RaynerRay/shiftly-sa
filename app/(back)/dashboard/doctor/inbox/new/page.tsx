@@ -36,5 +36,9 @@ export default async function page() {
       value: patient.patientId,
     };
   });
-  return <InboxForm users={users} session={session} title="New Message" />;
+  return (
+    <div className="p-2 md:p-4">
+      <InboxForm users={users} session={session} title="New Message" />
+    </div>
+  );
 }
