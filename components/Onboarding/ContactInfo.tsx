@@ -41,7 +41,7 @@ export default function ContactInfo({
   async function onSubmit(data: ContactFormProps) {
     setIsLoading(true);
     data.page = page;
-    console.log(data);
+    // console.log(data);
     // setIsLoading(true);
 
     //   email: string;

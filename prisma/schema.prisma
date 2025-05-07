@@ -140,6 +140,8 @@ model DoctorProfile {
   refereeNumber     String?
 
   additionalDocs String[]
+  dbs String[]
+  rightToWork String[]
   operationMode  String?  @default("Telehealth visit")
   hourlyWage     Int      @default(15)
 

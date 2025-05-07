@@ -102,6 +102,8 @@ export type additionalFormProps = {
   // research: string;
   accomplishments: string;
   additionalDocs: any;
+  dbs: any;
+  rightToWork: any;
   page: string;
 };
 export type stats = {

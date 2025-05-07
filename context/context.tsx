@@ -141,6 +141,8 @@ const initialAdditionalData: additionalFormProps = {
   // research: "",
   accomplishments: "",
   additionalDocs: [],
+  dbs: [],
+  rightToWork: [],
   page: "",
 };
 const initialContextData: IOnBoardingContextData = {

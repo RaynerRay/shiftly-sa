@@ -54,7 +54,19 @@ export const ourFileRouter = {
     return { uploadedBy: "Shiftly" };
   }),
   additionalDocs: f({
-    pdf: { maxFileSize: "16MB", maxFileCount: 4 },
+    pdf: { maxFileSize: "8MB", maxFileCount: 8 },
+  }).onUploadComplete(async ({  file }) => {
+    console.log("file url", file.url);
+    return { uploadedBy: "Shiftly" };
+  }),
+  dbs: f({
+    pdf: { maxFileSize: "8MB", maxFileCount: 2 },
+  }).onUploadComplete(async ({  file }) => {
+    console.log("file url", file.url);
+    return { uploadedBy: "Shiftly" };
+  }),
+  rightToWork: f({
+    pdf: { maxFileSize: "8MB", maxFileCount: 2 },
   }).onUploadComplete(async ({  file }) => {
     console.log("file url", file.url);
     return { uploadedBy: "Shiftly" };

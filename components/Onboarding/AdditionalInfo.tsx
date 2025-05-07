@@ -26,9 +26,25 @@ export default function AdditionalInfo({
       url: item,
     };
   });
+  const initialDbs = doctorProfile.dbs.map((item) => {
+    return {
+      title: item,
+      size: 0,
+      url: item,
+    };
+  });
+  const initialRightToWork = doctorProfile.rightToWork.map((item) => {
+    return {
+      title: item,
+      size: 0,
+      url: item,
+    };
+  });
   const isOnboarding = pathname.split("/").includes("onboarding");
   const [isLoading, setIsLoading] = useState(false);
   const [additionalDocs, setAdditionalDocs] = useState<FileProps[]>(initialDocs);
+  const [dbs, setDbs] = useState<FileProps[]>(initialDbs);
+  const [rightToWork, setRightToWork] = useState<FileProps[]>(initialRightToWork);
 
   const {
     register,
@@ -46,6 +62,8 @@ export default function AdditionalInfo({
   async function onSubmit(data: additionalFormProps) {
     data.page = page;
     data.additionalDocs = additionalDocs.map((doc: any) => doc.url); // eslint-disable-line @typescript-eslint/no-explicit-any
+    data.dbs = dbs.map((doc: any) => doc.url); // eslint-disable-line @typescript-eslint/no-explicit-any
+    data.rightToWork = rightToWork.map((doc: any) => doc.url); // eslint-disable-line @typescript-eslint/no-explicit-any
 
     setIsLoading(true);
     try {
@@ -111,7 +129,7 @@ export default function AdditionalInfo({
               
               <div className="p-4 border border-green-200 bg-green-50 rounded-md dark:bg-green-900/20 dark:border-green-800">
                 <h4 className="font-medium text-green-900 dark:text-green-300 mb-1">Social Workers</h4>
-                <p className="text-sm text-green-700 dark:text-green-400">Upload Social Worker Certificate & Disclosure and Barring Service certificate (DBS)</p>
+                <p className="text-sm text-green-700 dark:text-green-400">Upload Social Worker Certificate </p>
               </div>
               
               <div className="p-4 border border-yellow-200 bg-yellow-50 rounded-md dark:bg-yellow-900/20 dark:border-yellow-800">
@@ -119,18 +137,38 @@ export default function AdditionalInfo({
                 <p className="text-sm text-yellow-700 dark:text-yellow-400">Upload Nursing Certificate</p>
               </div>
             </div>
-            
-            <div className="mt-6 pt-6 border-t border-gray-200 dark:border-slate-600">
-              <div className="bg-red-50 p-4 rounded-md border-l-4 border-red-500 dark:bg-red-900/20 dark:border-red-800 mb-4">
-                <h4 className="font-medium text-red-900 dark:text-red-300 mb-1">Required for All Professionals</h4>
-                <p className="text-sm text-red-700 dark:text-red-400">Right To Work & Criminal Record documents</p>
-              </div>
-              
-              <MultipleFileUpload
+            <MultipleFileUpload
                 label="Upload Required Documents"
                 files={additionalDocs as any} // eslint-disable-line @typescript-eslint/no-explicit-any
                 setFiles={setAdditionalDocs}
                 endpoint="additionalDocs"
+              />
+            
+            <div className="mt-6 pt-6 border-t border-gray-200 dark:border-slate-600">
+              <div className="bg-red-50 p-4 rounded-md border-l-4 border-red-500 dark:bg-red-900/20 dark:border-red-800 mb-4">
+                <h4 className="font-medium text-red-900 dark:text-red-300 mb-1">Required for All Professionals</h4>
+                <p className="text-sm text-red-700 dark:text-red-400">Work Permit (Foreign Nationals)  </p>
+              </div>
+              
+              
+              <MultipleFileUpload
+                label="Upload Right To Work (optional)"
+                files={rightToWork as any} // eslint-disable-line @typescript-eslint/no-explicit-any
+                setFiles={setRightToWork}
+                endpoint="rightToWork"
+              />
+              </div>
+            <div className="mt-6 pt-6 border-t border-gray-200 dark:border-slate-600">
+              <div className="bg-red-50 p-4 rounded-md border-l-4 border-red-500 dark:bg-red-900/20 dark:border-red-800 mb-4">
+                <h4 className="font-medium text-red-900 dark:text-red-300 mb-1">Required for All Professionals</h4>
+                <p className="text-sm text-red-700 dark:text-red-400"> Police Clearance Certificate </p>
+              </div>
+              
+              <MultipleFileUpload
+                label="Upload Required Documents"
+                files={dbs as any} // eslint-disable-line @typescript-eslint/no-explicit-any
+                setFiles={setDbs}
+                endpoint="dbs"
               />
             </div>
           </div>
