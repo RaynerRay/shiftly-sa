@@ -8,7 +8,7 @@ interface Section {
   content: string[];
 }
 
-const ShiftlyUKTerms = () => {
+const ShiftlySATerms = () => {
   const [activeSection, setActiveSection] = useState<string>('');
   const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
@@ -17,7 +17,7 @@ const ShiftlyUKTerms = () => {
       id: 'agreement-overview',
       title: '1. Agreement Overview',
       content: [
-        'These terms constitute the full agreement between Shiftly and the Worker for access to the Shiftly UK Platform. The platform connects Workers with Clients to arrange Assignments, with no direct contract existing between Shiftly and the Worker for the Assignments themselves.',
+        'These terms constitute the full agreement between Shiftly and the Worker for access to the Shiftly SA Platform. The platform connects Workers with Clients to arrange Assignments, with no direct contract existing between Shiftly and the Worker for the Assignments themselves.',
         'The Worker is an independent contractor and not an employee of Shiftly or the Client. The Worker is free to engage with other third parties, provided this does not interfere with delivering services per industry standards.'
       ],
      
@@ -26,7 +26,7 @@ const ShiftlyUKTerms = () => {
       id: 'assignments',
       title: '2. Assignments',
       content: [
-        'Workers must create an account on the Shiftly UK Platform. Shiftly will verify the Worker’s suitability before granting access.',
+        'Workers must create an account on the Shiftly SA Platform. Shiftly will verify the Worker’s suitability before granting access.',
         'Due to the nature of temporary work, Shiftly does not guarantee the availability of Assignments. Workers are responsible for determining the suitability of any Assignment.',
         'For each Assignment, Shiftly will provide details including Client identity, Assignment duration, role, location, hours, pay rate, health and safety risks, and required qualifications.'
       ],
@@ -82,7 +82,7 @@ const ShiftlyUKTerms = () => {
       id: 'data-protection',
       title: '8. Data Protection',
       content: [
-        'Shiftly collects and processes Worker information in accordance with the Privacy Notice available on the Shiftly UK website. Workers must sign and date the Privacy Notice.'
+        'Shiftly collects and processes Worker information in accordance with the Privacy Notice available on the Shiftly SA website. Workers must sign and date the Privacy Notice.'
       ],
   
     },
@@ -90,7 +90,7 @@ const ShiftlyUKTerms = () => {
       id: 'warranties-indemnities',
       title: '9. Warranties and Indemnities',
       content: [
-        'Workers warrant that all provided application information is accurate, they possess the necessary experience, qualifications, and authorizations for Assignments, have valid UK work rights, have no relevant criminal convictions, are willing to work in the Client’s role, and operate as self-employed independent contractors.',
+        'Workers warrant that all provided application information is accurate, they possess the necessary experience, qualifications, and authorizations for Assignments, have valid SA work rights, have no relevant criminal convictions, are willing to work in the Client’s role, and operate as self-employed independent contractors.',
         'Workers will indemnify Shiftly and the Client against losses (including legal fees) arising from their failure to meet obligations, negligent or fraudulent acts, unauthorized disclosure of Confidential Information, or employment-related claims connected to Assignments or this agreement.'
       ],
    
@@ -184,7 +184,7 @@ const ShiftlyUKTerms = () => {
         <div className="max-w-5xl mx-auto bg-white shadow-xl rounded-xl p-8 md:p-12">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Shiftly Workers Terms and Conditions</h1>
           <p className="text-gray-600 mb-8">
-            Welcome to Shiftly UK, operated by CloudBreak group Ltd. By accessing our Click Shifts platform, you agree to these terms. Please review them carefully.
+            Welcome to Shiftly SA, operated by CloudBreak group Ltd. By accessing our Click Shifts platform, you agree to these terms. Please review them carefully.
           </p>
           
           {termsSections.map((section) => (
@@ -210,7 +210,7 @@ const ShiftlyUKTerms = () => {
 
           <footer className="text-center text-gray-500 mt-10 border-t pt-6">
             <p>
-              These terms may be updated from time to time. Continued use of the Shiftly UK platform constitutes acceptance of the latest terms.
+              These terms may be updated from time to time. Continued use of the Shiftly SA platform constitutes acceptance of the latest terms.
             </p>
           </footer>
         </div>
@@ -219,4 +219,4 @@ const ShiftlyUKTerms = () => {
   );
 };
 
-export default ShiftlyUKTerms;
+export default ShiftlySATerms;

@@ -65,7 +65,7 @@ export default function BlogForm({
       image: blogPost?.image || "/placeholder.jpg",
       categories: blogPost?.categories || [],
       lastUpdated: blogPost?.lastUpdated || new Date().toLocaleDateString('en-GB'),
-      isPublished: blogPost?.isPublished || false,
+      isPublished: blogPost?.isPublished || true,
     },
   });
 

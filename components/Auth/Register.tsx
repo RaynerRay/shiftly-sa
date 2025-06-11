@@ -121,7 +121,7 @@ export default function RegisterWithBg({ role = "USER", plan = "" }: RegisterFor
               </label>
               <input
                 type="tel"
-                placeholder="+44 20 7123 4567"
+                placeholder="+27 74 799 4567"
                 {...register("phone", { required: "Phone number is required" })}
                 className={`h-14 w-full text-base px-5 rounded-xl border ${
                   errors.phone ? "border-red-300 dark:border-red-700" : "border-neutral-200 dark:border-neutral-700"
@@ -197,7 +197,7 @@ export default function RegisterWithBg({ role = "USER", plan = "" }: RegisterFor
   <div className="h-full w-full flex items-center justify-center p-12">
     <div className="max-w-lg">
       <h2 className="text-3xl font-bold text-neutral-800 dark:text-neutral-100 mb-8">
-        Welcome to Shiftly – Instant Staffing for UK Healthcare Providers
+        Welcome to Shiftly – Instant Staffing for SA Healthcare Providers
       </h2>
 
       <div className="space-y-6">

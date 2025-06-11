@@ -223,14 +223,14 @@ export async function completeIndividualClientProfile(id: string | undefined, da
       try {
         const resend = new Resend(process.env.RESEND_API_KEY);
         const email = existingProfile.email;
-        const previewText = "Welcome to Shiftly South Africa";
+        const previewText = "Welcome to Shiftly SA";
         const message =
-          "Thanks for joining Shiftly South Africa as a client — we look forward to providing you with our services! If you have any questions, feel free to WhatsApp us at +44 794 763 7714.";
+          "Thanks for joining Shiftly SA as a client — we look forward to providing you with our services! If you have any questions, feel free to WhatsApp us at +44 794 763 7714.";
         
         await resend.emails.send({
           from: "Shiftly <noreply@shiftly.uk>",
           to: email,
-          subject: "Welcome to Shiftly South Africa",
+          subject: "Welcome to Shiftly SA",
           react: WelcomeEmail({ previewText, message }),
         });
       } catch (emailError) {

@@ -32,12 +32,12 @@ export async function generateMetadata(
   const blog = response.data;
 
   return {
-   title: `${blog.title} | Shiftly.uk`,
+   title: `${blog.title} | Shiftly.co.za`,
    description: blog.title,
    openGraph: {
     title: blog.title,
     description: blog.title,
-    url: `https://shiftly.uk/articles/${resolvedParams.slug}`,
+    url: `https://shiftly.co.za/articles/${resolvedParams.slug}`,
     images: blog.image?.length
      ? [{ url: blog.image, width: 1200, height: 630, alt: blog.title }]
      : [{ url: '/placeholder.jpg', width: 1200, height: 630, alt: blog.title }],
@@ -53,8 +53,8 @@ export async function generateMetadata(
  } catch (error) {
   console.error("Error generating metadata:", error);
   return {
-   title: "Blog Post | Shiftly.uk",
-   description: "Shiftly.uk blog post",
+   title: "Blog Post | Shiftly.co.za",
+   description: "Shiftly.co.za blog post",
   };
  }
 }

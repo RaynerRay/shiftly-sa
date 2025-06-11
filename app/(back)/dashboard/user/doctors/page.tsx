@@ -15,7 +15,11 @@ import { DoctorProps } from "../../doctor/patients/layout";
 export default async function page() {
   const session = await getServerSession(authOptions);
   const user = session?.user;
-  if (user?.role !== "USER") {
+  
+  // Updated to authorize USER, CLIENT, and INDIVIDUALCLIENT roles
+  const authorizedRoles = ["USER", "CLIENT", "INDIVIDUALCLIENT"];
+  
+  if (!user?.role || !authorizedRoles.includes(user.role)) {
     return <NotAuthorized />;
   }
 
@@ -31,12 +35,14 @@ export default async function page() {
       });
     }
   });
+  
   const doctors = Array.from(uniquePatientsMap.values()) as DoctorProps[];
   // console.log(patients);
   //doctors/doctor-asuman-jb
+  
   return (
     <div>
-      <div className="py-2  border-b border-gray-200 flex items-center justify-end px-4">
+      <div className="py-2 border-b border-gray-200 flex items-center justify-end px-4">
         <div className="md:flex items-center gap-4">
           <NewButton
             title="New Professional"
