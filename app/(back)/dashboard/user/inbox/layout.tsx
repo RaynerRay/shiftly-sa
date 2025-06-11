@@ -1,4 +1,4 @@
-import { getDoctorAppointments } from "@/actions/appointments";
+// import { getDoctorAppointments } from "@/actions/appointments";
 import { getInboxMessages, getInboxSentMessages } from "@/actions/inbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
